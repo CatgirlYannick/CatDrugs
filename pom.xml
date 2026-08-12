@@ -6,7 +6,7 @@
 
     <groupId>dev.catgirlyannick</groupId>
     <artifactId>catdrugs</artifactId>
-    <version>0.8.2-ALPHA</version>
+    <version>0.8.4-ALPHA</version>
 
     <properties>
         <maven.compiler.release>21</maven.compiler.release>

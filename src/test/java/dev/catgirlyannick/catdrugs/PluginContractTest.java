@@ -189,6 +189,19 @@ class PluginContractTest {
     }
 
     @Test
+    void consumptionAnimationsUseCatItemsCompatibleProfiles() {
+        YamlConfiguration config = loadResource("config.yml");
+        assertTrue(config.getBoolean("consumption-animations.enabled"));
+        for (String preset : List.of("smoke", "snort", "drink", "eat", "inhale", "inject", "ritual", "swallow")) {
+            assertTrue(config.getInt("consumption-animations.duration-by-preset." + preset) >= 8, preset);
+        }
+        assertEquals("smoke", config.getString("consumption-animations.drug-overrides.joint"));
+        assertEquals("smoke", config.getString("consumption-animations.drug-overrides.meth"));
+        assertEquals("drink", config.getString("consumption-animations.drug-overrides.alcohol"));
+        assertEquals("inhale", config.getString("consumption-animations.category-presets.inhalant"));
+    }
+
+    @Test
     void advancedGameplaySystemsAreEnabledAndHaveRequiredItems() {
         YamlConfiguration drugs = loadResource("drugs.yml");
         YamlConfiguration survival = loadResource("survival.yml");

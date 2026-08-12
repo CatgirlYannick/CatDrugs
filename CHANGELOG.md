@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.8.4-ALPHA - 2026-08-12
+
+- Added animated intake sequences for every consumable.
+- Added item- and category-specific smoke, snort, drink, eat, inhale, inject,
+  ritual, and swallow profiles.
+- Integrated the CatItems 0.3 public animation API with a standalone fallback.
+- Delayed gameplay effects until the visible intake sequence finishes.
+
+## 0.8.3-ALPHA - 2026-08-12
+
+- Added central Small Caps rendering for messages and GUI text.
+- Preserved real `ä`, `ö`, `ü` and `ß` characters without ASCII replacements.
+
 ## 0.8.2-ALPHA - 2026-08-12
 
 - Made legacy configuration migration recursively add every missing leaf value.

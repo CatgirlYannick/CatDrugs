@@ -1,5 +1,5 @@
 name: CatDrugs
-version: '0.8.2-ALPHA'
+version: '0.8.4-ALPHA'
 main: dev.catgirlyannick.catdrugs.CatDrugsPlugin
 api-version: '1.21'
 authors: [CatgirlYannick]

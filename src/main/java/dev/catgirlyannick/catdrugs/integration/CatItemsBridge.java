@@ -3,6 +3,7 @@ package dev.catgirlyannick.catdrugs.integration;
 import dev.catgirlyannick.catdrugs.model.DrugDefinition;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -65,6 +66,45 @@ public final class CatItemsBridge {
         }
         Optional<?> result = invokeOptional(api, "identify", new Class<?>[]{ItemStack.class}, item);
         return result.filter(String.class::isInstance).map(String.class::cast);
+    }
+
+    public boolean supportsUseAnimations() {
+        Object api = provider().orElse(null);
+        if (api == null) {
+            return false;
+        }
+        try {
+            api.getClass().getMethod("playUseAnimation", Player.class, String.class, int.class);
+            return true;
+        } catch (NoSuchMethodException | RuntimeException exception) {
+            return false;
+        }
+    }
+
+    public boolean playUseAnimation(Player player, String preset, int durationTicks) {
+        Object api = provider().orElse(null);
+        if (api == null) {
+            return false;
+        }
+        try {
+            Object result = api.getClass().getMethod("playUseAnimation", Player.class, String.class, int.class)
+                    .invoke(api, player, preset, durationTicks);
+            return result instanceof Boolean played && played;
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | RuntimeException exception) {
+            return false;
+        }
+    }
+
+    public void stopUseAnimation(Player player) {
+        Object api = provider().orElse(null);
+        if (api == null) {
+            return;
+        }
+        try {
+            api.getClass().getMethod("stopUseAnimation", Player.class).invoke(api, player);
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | RuntimeException ignored) {
+            // Older CatItems builds have no animation API; the CatDrugs fallback needs no explicit stop.
+        }
     }
 
     public String status(Collection<DrugDefinition> definitions) {

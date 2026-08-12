@@ -19,23 +19,26 @@ public final class ConsumptionService {
     private final RealisticEffectService realisticEffects;
     private final DoseReactionService doseReactions;
     private final AdvancedGameplayService advancedGameplay;
+    private final ConsumptionAnimationService animations;
     private final DoseTracker doseTracker = new DoseTracker();
     private final Map<UUID, Map<String, Long>> cooldowns = new HashMap<>();
     private YamlConfiguration config;
 
     public ConsumptionService(JavaPlugin plugin, MessageService messages, YamlConfiguration config,
                               RealisticEffectService realisticEffects, DoseReactionService doseReactions,
-                              AdvancedGameplayService advancedGameplay) {
+                              AdvancedGameplayService advancedGameplay, ConsumptionAnimationService animations) {
         this.plugin = plugin;
         this.messages = messages;
         this.config = config;
         this.realisticEffects = realisticEffects;
         this.doseReactions = doseReactions;
         this.advancedGameplay = advancedGameplay;
+        this.animations = animations;
     }
 
     public void reload(YamlConfiguration config) {
         this.config = config;
+        animations.reload(config);
     }
 
     public boolean consume(Player player, DrugDefinition drug) {
@@ -47,6 +50,10 @@ public final class ConsumptionService {
             messages.send(player, "errors.not-consumable");
             return false;
         }
+        if (animations.isPlaying(player)) {
+            messages.send(player, "errors.animation-busy");
+            return false;
+        }
         long now = System.currentTimeMillis();
         long next = cooldowns.computeIfAbsent(player.getUniqueId(), ignored -> new HashMap<>())
                 .getOrDefault(drug.id(), 0L);
@@ -56,6 +63,11 @@ public final class ConsumptionService {
             return false;
         }
         cooldowns.get(player.getUniqueId()).put(drug.id(), now + drug.cooldownSeconds() * 1000L);
+        animations.play(player, drug, () -> completeConsumption(player, drug));
+        return true;
+    }
+
+    private void completeConsumption(Player player, DrugDefinition drug) {
         AdvancedGameplayService.ConsumptionModifiers modifiers = advancedGameplay.onConsumption(player, drug);
         if (!realisticEffects.replacesLegacyEffects()) {
             apply(player, drug.immediateEffects(), modifiers.effectiveness());
@@ -68,10 +80,8 @@ public final class ConsumptionService {
                 }
             }, drug.afterDelayTicks());
         }
-        player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_DRINK, 0.7f, 0.9f);
         messages.send(player, "consumption.used", Map.of("drug", plainName(drug.displayName())));
         checkOverdose(player, drug, modifiers.extraDosePoints());
-        return true;
     }
 
     private void checkOverdose(Player player, DrugDefinition drug, int extraDosePoints) {
@@ -110,7 +120,9 @@ public final class ConsumptionService {
         return doseTracker.current(player.getUniqueId(), window);
     }
 
-    public void clear(UUID playerId) {
+    public void clear(Player player) {
+        UUID playerId = player.getUniqueId();
+        animations.clear(player);
         cooldowns.remove(playerId);
         doseTracker.clear(playerId);
         realisticEffects.clear(playerId);

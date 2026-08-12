@@ -6,6 +6,7 @@ config-version: 1
 prefix: '<dark_gray>[<gradient:#86efac:#c084fc>CatDrugs</gradient><dark_gray>] <reset>'
 
 errors:
+  animation-busy: "<yellow>Finish the current use animation first.</yellow>"
   no-permission: '<red>You do not have permission to do that.</red>'
   unknown-command: '<red>Unknown subcommand. Use <white>/catdrugs help</white>.</red>'
   unknown-drug: '<red>Unknown CatDrugs ID: <white>{drug}</white></red>'

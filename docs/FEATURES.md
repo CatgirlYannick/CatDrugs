@@ -12,6 +12,13 @@ trigger negative reactions and damage.
 The profiles are gameplay abstractions, not medical simulations or dosing and
 safety advice.
 
+## Intake Animations
+
+Every consumable resolves to a configurable intake preset. The sequence plays
+hand movement, close-range particles, and synchronized sounds before its effects
+begin. CatItems 0.3 or newer renders the full animation through its public API.
+Without CatItems, CatDrugs automatically uses a smaller built-in fallback.
+
 ## Acute Dose Reactions
 
 Increasing dose points can escalate from nausea to vomiting and finally a

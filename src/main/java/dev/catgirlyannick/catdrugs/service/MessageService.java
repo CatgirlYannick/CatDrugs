@@ -36,10 +36,12 @@ public final class MessageService {
         String prefix = resolve("prefix",
                 "<dark_gray>[<light_purple>CatDrugs</light_purple>]</dark_gray> ");
         String value = resolve(path, "<red>Missing message: " + path + "</red>");
+        String formatted = SmallCapsFormatter.formatTemplate(prefix + value);
         for (Map.Entry<String, String> entry : placeholders.entrySet()) {
-            value = value.replace("{" + entry.getKey() + "}", escape(entry.getValue()));
+            formatted = formatted.replace("{" + entry.getKey() + "}",
+                    escape(SmallCapsFormatter.formatValue(entry.getValue())));
         }
-        return miniMessage.deserialize(prefix + value);
+        return miniMessage.deserialize(formatted);
     }
 
     String resolve(String path, String finalFallback) {
@@ -51,7 +53,7 @@ public final class MessageService {
     }
 
     public Component raw(String text) {
-        return miniMessage.deserialize(text);
+        return miniMessage.deserialize(SmallCapsFormatter.formatTemplate(text));
     }
 
     private String escape(String value) {

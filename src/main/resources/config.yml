@@ -24,6 +24,48 @@ features:
   overdose:
     enabled: true
 
+# Animated intake sequences. CatItems 0.3+ renders these through its public API;
+# CatDrugs keeps a smaller fallback so the plugin remains independently usable.
+consumption-animations:
+  enabled: true
+  default-duration-ticks: 32
+  duration-by-preset:
+    smoke: 44
+    snort: 28
+    drink: 34
+    eat: 40
+    inhale: 36
+    inject: 30
+    ritual: 46
+    swallow: 26
+  category-presets:
+    cannabis: "smoke"
+    stimulant: "snort"
+    party: "snort"
+    dissociative: "snort"
+    depressant: "drink"
+    sedative: "drink"
+    herbal: "eat"
+    inhalant: "inhale"
+    synthetic: "inhale"
+    opioid: "inject"
+    medical: "inject"
+    psychedelic: "ritual"
+  drug-overrides:
+    joint: "smoke"
+    hashish: "smoke"
+    meth: "smoke"
+    crack: "smoke"
+    cannabis_oil: "inhale"
+    nicotine: "inhale"
+    dmt: "inhale"
+    edible: "eat"
+    coca_leaf: "eat"
+    caffeine: "drink"
+    alcohol: "drink"
+    absinthe: "drink"
+    moonshine: "drink"
+
 overdose:
   # Dose points are added within this time window.
   window-seconds: 300

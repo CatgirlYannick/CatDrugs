@@ -10,6 +10,7 @@ import dev.catgirlyannick.catdrugs.item.DrugItemFactory;
 import dev.catgirlyannick.catdrugs.listener.GameplayListener;
 import dev.catgirlyannick.catdrugs.listener.GuiListener;
 import dev.catgirlyannick.catdrugs.service.ConsumptionService;
+import dev.catgirlyannick.catdrugs.service.ConsumptionAnimationService;
 import dev.catgirlyannick.catdrugs.service.AdvancedGameplayService;
 import dev.catgirlyannick.catdrugs.service.DoseReactionService;
 import dev.catgirlyannick.catdrugs.service.MessageService;
@@ -33,6 +34,7 @@ public final class CatDrugsPlugin extends JavaPlugin {
     private RealisticEffectService realisticEffects;
     private DoseReactionService doseReactions;
     private AdvancedGameplayService advancedGameplay;
+    private ConsumptionAnimationService consumptionAnimations;
 
     @Override
     public void onEnable() {
@@ -70,8 +72,9 @@ public final class CatDrugsPlugin extends JavaPlugin {
         doseReactions = new DoseReactionService(this, messages, configs.main());
         dealers = new VillageDealerService(this, registry, itemFactory, messages, configs.survival());
         advancedGameplay = new AdvancedGameplayService(this, itemFactory, dealers, messages, configs.survival());
+        consumptionAnimations = new ConsumptionAnimationService(this, catItems, configs.main());
         consumption = new ConsumptionService(this, messages, configs.main(), realisticEffects, doseReactions,
-                advancedGameplay);
+                advancedGameplay, consumptionAnimations);
         advancedGameplay.bindConsumption(consumption);
         recipes = new RecipeService(this, registry, itemFactory);
         gameplayListener = new GameplayListener(this, itemFactory, consumption, dealers, advancedGameplay,
@@ -93,7 +96,8 @@ public final class CatDrugsPlugin extends JavaPlugin {
                 java.util.Arrays.stream(world.getLoadedChunks()).forEach(dealers::scanChunk)));
         getLogger().info("CatDrugs " + getPluginMeta().getVersion() + " is active: " + registry.consumables().size()
                 + " substances, " + recipeCount + " recipes, CatItems="
-                + catItemsAddon.status(registry.all()) + ".");
+                + catItemsAddon.status(registry.all()) + ", use animations="
+                + consumptionAnimations.providerStatus() + ".");
     }
 
     public boolean reloadCatDrugs() {

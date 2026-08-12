@@ -1,6 +1,6 @@
 # CatDrugs - Start Here
 
-Current release: `0.8.2-ALPHA` for Paper 1.21 through 1.21.11 and Java 21.
+Current release: `0.8.4-ALPHA` for Paper 1.21 through 1.21.11 and Java 21.
 
 CatDrugs works independently with Vanilla item presentation. Install the
 separate [CatItems](../CatItems/START_HERE.md) plugin only when custom textures

@@ -9,6 +9,13 @@
 | `messages.yml` | MiniMessage/RGB messages |
 | `realistic-effects.yml` | Multi-phase profiles and custom gameplay symptoms |
 
+## Intake Animations
+
+`config.yml > consumption-animations` controls the feature, category presets,
+individual drug overrides, and duration per preset. Durations are expressed in
+ticks. CatDrugs accepts values from 8 through 120 ticks and delays the gameplay
+effect until the sequence is complete.
+
 ## Multi-Phase Effects
 
 `realistic-effects.yml` maps consumables to a default category profile. A

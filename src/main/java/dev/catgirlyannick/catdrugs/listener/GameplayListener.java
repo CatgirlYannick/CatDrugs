@@ -193,7 +193,7 @@ public final class GameplayListener implements Listener {
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
-        consumption.clear(event.getPlayer().getUniqueId());
+        consumption.clear(event.getPlayer());
     }
 
     private int randomAmount(ConfigurationSection entry) {
