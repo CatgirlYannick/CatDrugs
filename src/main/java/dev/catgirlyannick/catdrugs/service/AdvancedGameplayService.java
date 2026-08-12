@@ -59,7 +59,7 @@ public final class AdvancedGameplayService implements Listener {
     private final NamespacedKey questProgressKey;
     private final NamespacedKey questRequiredKey;
     private final Set<UUID> labJobs = new HashSet<>();
-    private final List<BukkitTask> tasks = new ArrayList<>();
+    private final Set<BukkitTask> tasks = new HashSet<>();
     private ConsumptionService consumption;
     private YamlConfiguration config;
 
@@ -160,7 +160,9 @@ public final class AdvancedGameplayService implements Listener {
                 "input", plainId(input.id()), "output", plainId(output)));
         player.playSound(player.getLocation(), Sound.BLOCK_BREWING_STAND_BREW, 0.8f, 1.1f);
         int delay = bounded(config.getInt("advanced-gameplay.lab.processing-seconds", 5), 1, 60) * 20;
-        tasks.add(plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
+        BukkitTask[] holder = new BukkitTask[1];
+        holder[0] = plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
+            tasks.remove(holder[0]);
             labJobs.remove(player.getUniqueId());
             if (!player.isOnline()) {
                 return;
@@ -171,7 +173,8 @@ public final class AdvancedGameplayService implements Listener {
                     14, 0.4, 0.5, 0.4, 0.02);
             player.playSound(player.getLocation(), Sound.BLOCK_BREWING_STAND_BREW, 1.0f, 1.5f);
             messages.send(player, "advanced.lab-complete", Map.of("output", plainId(output)));
-        }, delay));
+        }, delay);
+        tasks.add(holder[0]);
         return true;
     }
 
@@ -400,6 +403,7 @@ public final class AdvancedGameplayService implements Listener {
         BukkitTask[] holder = new BukkitTask[1];
         holder[0] = plugin.getServer().getScheduler().runTaskTimer(plugin, () -> {
             if (!player.isOnline() || elapsed[0]++ >= seconds) {
+                tasks.remove(holder[0]);
                 holder[0].cancel();
                 return;
             }
@@ -444,8 +448,12 @@ public final class AdvancedGameplayService implements Listener {
         player.playSound(player.getLocation(), Sound.EVENT_RAID_HORN, 0.8f, 1.15f);
         messages.send(player, "advanced.enforcement", Map.of("count", Integer.toString(count)));
         int lifetime = bounded(config.getInt("advanced-gameplay.enforcement.lifetime-seconds", 45), 10, 180) * 20;
-        tasks.add(plugin.getServer().getScheduler().runTaskLater(plugin,
-                () -> patrol.stream().filter(Pillager::isValid).forEach(Pillager::remove), lifetime));
+        BukkitTask[] holder = new BukkitTask[1];
+        holder[0] = plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
+            tasks.remove(holder[0]);
+            patrol.stream().filter(Pillager::isValid).forEach(Pillager::remove);
+        }, lifetime);
+        tasks.add(holder[0]);
     }
 
     private void maybeGiveRandomEvent(Player player) {

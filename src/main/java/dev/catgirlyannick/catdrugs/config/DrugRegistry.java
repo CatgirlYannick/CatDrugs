@@ -26,6 +26,8 @@ public final class DrugRegistry {
     private final JavaPlugin plugin;
     private final Map<String, DrugDefinition> definitions = new LinkedHashMap<>();
     private final Map<String, DrugDefinition> byCustomItemId = new LinkedHashMap<>();
+    private List<DrugDefinition> allDefinitions = List.of();
+    private List<DrugDefinition> consumableDefinitions = List.of();
 
     public DrugRegistry(JavaPlugin plugin) {
         this.plugin = plugin;
@@ -34,6 +36,8 @@ public final class DrugRegistry {
     public boolean reload() {
         definitions.clear();
         byCustomItemId.clear();
+        allDefinitions = List.of();
+        consumableDefinitions = List.of();
         File file = new File(plugin.getDataFolder(), "drugs.yml");
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
         try (InputStream stream = plugin.getResource("drugs.yml")) {
@@ -77,6 +81,8 @@ public final class DrugRegistry {
             plugin.getLogger().severe("drugs.yml does not contain any valid definitions.");
             return false;
         }
+        allDefinitions = List.copyOf(definitions.values());
+        consumableDefinitions = allDefinitions.stream().filter(DrugDefinition::consumable).toList();
         return valid;
     }
 
@@ -165,10 +171,10 @@ public final class DrugRegistry {
     }
 
     public Collection<DrugDefinition> all() {
-        return List.copyOf(definitions.values());
+        return allDefinitions;
     }
 
     public Collection<DrugDefinition> consumables() {
-        return definitions.values().stream().filter(DrugDefinition::consumable).toList();
+        return consumableDefinitions;
     }
 }

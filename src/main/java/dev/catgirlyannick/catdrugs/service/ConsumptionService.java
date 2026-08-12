@@ -12,6 +12,7 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.function.BooleanSupplier;
 
 public final class ConsumptionService {
     private final JavaPlugin plugin;
@@ -23,6 +24,11 @@ public final class ConsumptionService {
     private final DoseTracker doseTracker = new DoseTracker();
     private final Map<UUID, Map<String, Long>> cooldowns = new HashMap<>();
     private YamlConfiguration config;
+    private boolean consumptionEnabled;
+    private boolean overdoseEnabled;
+    private int doseWindowSeconds;
+    private int overdoseThreshold;
+    private double overdoseDamage;
 
     public ConsumptionService(JavaPlugin plugin, MessageService messages, YamlConfiguration config,
                               RealisticEffectService realisticEffects, DoseReactionService doseReactions,
@@ -34,15 +40,17 @@ public final class ConsumptionService {
         this.doseReactions = doseReactions;
         this.advancedGameplay = advancedGameplay;
         this.animations = animations;
+        cacheSettings();
     }
 
     public void reload(YamlConfiguration config) {
         this.config = config;
         animations.reload(config);
+        cacheSettings();
     }
 
-    public boolean consume(Player player, DrugDefinition drug) {
-        if (!config.getBoolean("features.consumption.enabled", true)) {
+    public boolean consume(Player player, DrugDefinition drug, BooleanSupplier commitItem) {
+        if (!consumptionEnabled) {
             messages.send(player, "errors.feature-disabled");
             return false;
         }
@@ -51,7 +59,6 @@ public final class ConsumptionService {
             return false;
         }
         if (animations.isPlaying(player)) {
-            messages.send(player, "errors.animation-busy");
             return false;
         }
         long now = System.currentTimeMillis();
@@ -63,7 +70,16 @@ public final class ConsumptionService {
             return false;
         }
         cooldowns.get(player.getUniqueId()).put(drug.id(), now + drug.cooldownSeconds() * 1000L);
-        animations.play(player, drug, () -> completeConsumption(player, drug));
+        animations.play(player, drug, () -> {
+            if (!commitItem.getAsBoolean()) {
+                Map<String, Long> playerCooldowns = cooldowns.get(player.getUniqueId());
+                if (playerCooldowns != null) {
+                    playerCooldowns.remove(drug.id());
+                }
+                return;
+            }
+            completeConsumption(player, drug);
+        });
         return true;
     }
 
@@ -85,20 +101,18 @@ public final class ConsumptionService {
     }
 
     private void checkOverdose(Player player, DrugDefinition drug, int extraDosePoints) {
-        int window = clamp(config.getInt("overdose.window-seconds", 300), 10, 3600);
-        int previous = doseTracker.current(player.getUniqueId(), window);
-        int total = doseTracker.add(player.getUniqueId(), drug.dosePoints() + Math.max(0, extraDosePoints), window);
+        int previous = doseTracker.current(player.getUniqueId(), doseWindowSeconds);
+        int total = doseTracker.add(player.getUniqueId(), drug.dosePoints() + Math.max(0, extraDosePoints),
+                doseWindowSeconds);
         doseReactions.evaluate(player, previous, total);
-        if (!config.getBoolean("features.overdose.enabled", true)) {
+        if (!overdoseEnabled) {
             return;
         }
-        int threshold = clamp(config.getInt("overdose.threshold-points", 10), 1, 1000);
-        if (total < threshold) {
+        if (total < overdoseThreshold) {
             return;
         }
-        double damage = Math.max(0.0, Math.min(config.getDouble("overdose.damage", 6.0), 100.0));
-        if (damage > 0.0) {
-            player.damage(damage);
+        if (overdoseDamage > 0.0) {
+            player.damage(overdoseDamage);
         }
         player.addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA, 20 * 20, 1, false, true, true));
         player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 30 * 20, 1, false, true, true));
@@ -116,8 +130,7 @@ public final class ConsumptionService {
     }
 
     public int currentDose(Player player) {
-        int window = clamp(config.getInt("overdose.window-seconds", 300), 10, 3600);
-        return doseTracker.current(player.getUniqueId(), window);
+        return doseTracker.current(player.getUniqueId(), doseWindowSeconds);
     }
 
     public void clear(Player player) {
@@ -143,6 +156,14 @@ public final class ConsumptionService {
 
     private static int clamp(int value, int min, int max) {
         return Math.max(min, Math.min(max, value));
+    }
+
+    private void cacheSettings() {
+        consumptionEnabled = config.getBoolean("features.consumption.enabled", true);
+        overdoseEnabled = config.getBoolean("features.overdose.enabled", true);
+        doseWindowSeconds = clamp(config.getInt("overdose.window-seconds", 300), 10, 3600);
+        overdoseThreshold = clamp(config.getInt("overdose.threshold-points", 10), 1, 1000);
+        overdoseDamage = Math.max(0.0, Math.min(config.getDouble("overdose.damage", 6.0), 100.0));
     }
 
     private static String plainName(String miniMessage) {

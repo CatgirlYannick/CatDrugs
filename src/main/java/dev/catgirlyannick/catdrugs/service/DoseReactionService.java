@@ -4,6 +4,7 @@ import org.bukkit.HeightMap;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.entity.Pose;
 import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -14,9 +15,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitTask;
+import org.bukkit.util.Vector;
 
 import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -34,6 +37,8 @@ public final class DoseReactionService {
     private final JavaPlugin plugin;
     private final MessageService messages;
     private final Map<UUID, BukkitTask> blackoutTasks = new HashMap<>();
+    private final Map<UUID, Set<BukkitTask>> reactionTasks = new HashMap<>();
+    private final Map<UUID, VomitState> vomitStates = new HashMap<>();
     private YamlConfiguration config;
 
     public DoseReactionService(JavaPlugin plugin, MessageService messages, YamlConfiguration config) {
@@ -84,22 +89,92 @@ public final class DoseReactionService {
     private void vomit(Player player, int points) {
         player.addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA, 22 * 20, 1, false, false, true));
         player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 18 * 20, 0, false, false, true));
-        player.setFoodLevel(Math.max(0, player.getFoodLevel() - 4));
-        player.setSaturation(Math.max(0.0f, player.getSaturation() - 5.0f));
+        int foodLoss = clamp(config.getInt("dose-reactions.vomiting.food-loss", 4), 0, 10);
+        float saturationLoss = (float) clamp(config.getDouble(
+                "dose-reactions.vomiting.saturation-loss", 5.0), 0.0, 20.0);
+        player.setFoodLevel(Math.max(0, player.getFoodLevel() - foodLoss));
+        player.setSaturation(Math.max(0.0f, player.getSaturation() - saturationLoss));
+        player.setExhaustion(Math.min(4.0f, player.getExhaustion() + (float) clamp(
+                config.getDouble("dose-reactions.vomiting.exhaustion", 1.8), 0.0, 4.0)));
         messages.send(player, "consumption.reactions.vomiting", Map.of("points", Integer.toString(points)));
-        for (int burst = 0; burst < 4; burst++) {
-            plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
+        UUID playerId = player.getUniqueId();
+        finishVomit(playerId);
+        vomitStates.put(playerId, new VomitState(player, player.getPose(), player.hasFixedPose(),
+                player.isSneaking()));
+        player.setPose(Pose.SNEAKING, true);
+        player.setSneaking(true);
+
+        int bursts = clamp(config.getInt("dose-reactions.vomiting.bursts", 5), 2, 10);
+        int interval = clamp(config.getInt("dose-reactions.vomiting.interval-ticks", 8), 4, 20);
+        for (int burst = 0; burst < bursts; burst++) {
+            int index = burst;
+            BukkitTask[] holder = new BukkitTask[1];
+            holder[0] = plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
+                untrackReaction(playerId, holder[0]);
                 if (!player.isOnline()) {
+                    finishVomit(playerId);
                     return;
                 }
-                Location mouth = player.getEyeLocation().add(player.getLocation().getDirection().multiply(0.45));
-                player.getWorld().spawnParticle(Particle.ITEM, mouth, 16, 0.12, 0.08, 0.12, 0.08,
-                        new ItemStack(Material.SLIME_BALL));
-                player.getWorld().spawnParticle(Particle.SPLASH, mouth, 8, 0.15, 0.08, 0.15, 0.05);
-                player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_BURP, 0.9f,
-                        (float) ThreadLocalRandom.current().nextDouble(0.5, 0.8));
-                player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_SPLASH, 0.35f, 0.8f);
-            }, burst * 9L);
+                performVomitBurst(player, index);
+                if (index == bursts - 1) {
+                    finishVomit(playerId);
+                }
+            }, (long) burst * interval);
+            trackReaction(playerId, holder[0]);
+        }
+    }
+
+    private void performVomitBurst(Player player, int burst) {
+        Location eye = player.getEyeLocation();
+        Vector direction = eye.getDirection().normalize();
+        Location mouth = eye.clone().add(direction.clone().multiply(0.38)).add(0.0, -0.18, 0.0);
+        int particleCount = clamp(config.getInt("dose-reactions.vomiting.particle-count", 18), 6, 40);
+        for (int step = 0; step < 5; step++) {
+            double distance = 0.16 + step * 0.20;
+            Location stream = mouth.clone().add(direction.clone().multiply(distance))
+                    .add(0.0, -0.035 * step * step, 0.0);
+            int count = Math.max(1, particleCount / 5);
+            player.getWorld().spawnParticle(Particle.ITEM, stream, count,
+                    0.045 + step * 0.012, 0.035, 0.045 + step * 0.012, 0.025,
+                    new ItemStack(burst % 2 == 0 ? Material.SLIME_BALL : Material.BROWN_DYE));
+            player.getWorld().spawnParticle(Particle.SPLASH, stream, Math.max(1, count / 2),
+                    0.05, 0.03, 0.05, 0.02);
+        }
+        Location impact = mouth.clone().add(direction.clone().multiply(1.2)).add(0.0, -0.75, 0.0);
+        player.getWorld().spawnParticle(Particle.SPLASH, impact, 8, 0.22, 0.03, 0.22, 0.04);
+        player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_HURT, 0.38f,
+                (float) ThreadLocalRandom.current().nextDouble(0.62, 0.82));
+        player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_BURP, 0.85f,
+                (float) ThreadLocalRandom.current().nextDouble(0.5, 0.78));
+        player.playSound(impact, Sound.ENTITY_GENERIC_SPLASH, 0.38f, 0.72f);
+
+        double movementFactor = clamp(config.getDouble(
+                "dose-reactions.vomiting.movement-retention", 0.35), 0.0, 1.0);
+        Vector velocity = player.getVelocity();
+        player.setVelocity(new Vector(velocity.getX() * movementFactor,
+                Math.min(velocity.getY(), 0.02), velocity.getZ() * movementFactor));
+    }
+
+    private void trackReaction(UUID playerId, BukkitTask task) {
+        reactionTasks.computeIfAbsent(playerId, ignored -> new HashSet<>()).add(task);
+    }
+
+    private void untrackReaction(UUID playerId, BukkitTask task) {
+        Set<BukkitTask> tasks = reactionTasks.get(playerId);
+        if (tasks == null) {
+            return;
+        }
+        tasks.remove(task);
+        if (tasks.isEmpty()) {
+            reactionTasks.remove(playerId);
+        }
+    }
+
+    private void finishVomit(UUID playerId) {
+        VomitState state = vomitStates.remove(playerId);
+        if (state != null && state.player().isOnline()) {
+            state.player().setPose(state.originalPose(), state.originalFixedPose());
+            state.player().setSneaking(state.originalSneaking());
         }
     }
 
@@ -189,6 +264,11 @@ public final class DoseReactionService {
     }
 
     public void clear(UUID playerId) {
+        Set<BukkitTask> reactions = reactionTasks.remove(playerId);
+        if (reactions != null) {
+            reactions.forEach(BukkitTask::cancel);
+        }
+        finishVomit(playerId);
         BukkitTask task = blackoutTasks.remove(playerId);
         if (task != null) {
             task.cancel();
@@ -196,11 +276,22 @@ public final class DoseReactionService {
     }
 
     public void clearAll() {
+        reactionTasks.values().stream().flatMap(Set::stream).forEach(BukkitTask::cancel);
+        reactionTasks.clear();
+        new java.util.ArrayList<>(vomitStates.keySet()).forEach(this::finishVomit);
         blackoutTasks.values().forEach(BukkitTask::cancel);
         blackoutTasks.clear();
     }
 
     private static int clamp(int value, int min, int max) {
         return Math.max(min, Math.min(max, value));
+    }
+
+    private static double clamp(double value, double min, double max) {
+        return Math.max(min, Math.min(max, value));
+    }
+
+    private record VomitState(Player player, Pose originalPose, boolean originalFixedPose,
+                              boolean originalSneaking) {
     }
 }

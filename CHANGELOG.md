@@ -1,5 +1,41 @@
 # Changelog
 
+## 0.9.0-ALPHA - 2026-08-12
+
+- Added six non-potion effect types: client camera drift, private visual echoes,
+  spatial audio distortion, focus pulses, time distortion, and muscle tension.
+- Added optional PacketEvents 2.13.0 integration with an automatic Paper-only
+  fallback when the external plugin is absent.
+- Rebuilt vomiting as a timed multi-burst reaction with a directed item/splash
+  stream, impact and body sounds, crouching, movement reduction, food,
+  saturation, and exhaustion loss, followed by complete pose restoration.
+- Added an upgrade-safe realistic-effects v2 migration that backs up the old
+  file and merges only missing new custom effects.
+- Integrated CatItems 0.7 staged approach/contact/release intake animations.
+
+## 0.8.7-ALPHA - 2026-08-12
+
+- Cached CatItems provider and reflection lookups on the item and animation hot paths.
+- Cached immutable registry, dealer trade, world-filter, and overdose settings across reloads.
+- Prevented completed realistic-effect, perception, lab, and patrol tasks from accumulating.
+- Replaced repeated dose-history summation with an incrementally maintained rolling total.
+- Skipped rebuilding unchanged dealer recipes whenever their chunks load again.
+
+## 0.8.6-ALPHA - 2026-08-12
+
+- Replaced generic intake presets with ten drug-route-specific body emotes.
+- Added dedicated joint, pipe, meth/crack, snorting, bottle, edible, vape,
+  injection, psychedelic sway, and pill mappings.
+- Added a backed-up automatic migration for existing animation mappings.
+
+## 0.8.5-ALPHA - 2026-08-12
+
+- Integrated the CatItems 0.4 YAML keyframe and animated-model engine.
+- Kept single items visible for the full intake sequence and consumed them only
+  after the final frame.
+- Made inventory switching safe by committing the matching item from inventory.
+- Suppressed repeated interaction messages while an animation is already active.
+
 ## 0.8.4-ALPHA - 2026-08-12
 
 - Added animated intake sequences for every consumable.

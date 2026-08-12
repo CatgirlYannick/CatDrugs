@@ -1,10 +1,15 @@
 # CatDrugs - Start Here
 
-Current release: `0.8.4-ALPHA` for Paper 1.21 through 1.21.11 and Java 21.
+Current release: `0.9.0-ALPHA` for Paper 1.21 through 1.21.11 and Java 21.
 
 CatDrugs works independently with Vanilla item presentation. Install the
 separate [CatItems](../CatItems/START_HERE.md) plugin only when custom textures
-and models are wanted. CatItems also works without CatDrugs.
+and models are wanted. CatItems also works without CatDrugs. PacketEvents 2.13.0
+is optional and adds client-side camera drift to selected perception profiles.
+
+The 0.9.0 runtime keeps CatItems, registry, dealer, and dose lookups cached and
+removes completed effect tasks from memory automatically. Older effect settings
+are backed up and merged automatically when upgrading from 0.8.6.
 
 ## First Start
 

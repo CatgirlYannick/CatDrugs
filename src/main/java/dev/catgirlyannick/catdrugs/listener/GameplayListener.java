@@ -110,9 +110,8 @@ public final class GameplayListener implements Listener {
                 return;
             }
         }
-        if (consumption.consume(event.getPlayer(), drug)) {
-            consumeOne(event.getPlayer(), held);
-        }
+        consumption.consume(event.getPlayer(), drug,
+                () -> consumeOne(event.getPlayer(), drug.id()));
     }
 
     static boolean isConsumptionInteraction(Action action, EquipmentSlot hand) {
@@ -202,13 +201,33 @@ public final class GameplayListener implements Listener {
         return ThreadLocalRandom.current().nextInt(min, max + 1);
     }
 
-    private void consumeOne(org.bukkit.entity.Player player, ItemStack held) {
-        if (held.getAmount() <= 1) {
-            player.getInventory().setItemInMainHand(null);
-        } else {
-            held.setAmount(held.getAmount() - 1);
-            player.getInventory().setItemInMainHand(held);
+    private boolean consumeOne(org.bukkit.entity.Player player, String drugId) {
+        ItemStack mainHand = player.getInventory().getItemInMainHand();
+        if (matches(mainHand, drugId)) {
+            decrement(mainHand);
+            player.getInventory().setItemInMainHand(mainHand.getAmount() <= 0 ? null : mainHand);
+            return true;
         }
+        ItemStack[] storage = player.getInventory().getStorageContents();
+        for (int slot = 0; slot < storage.length; slot++) {
+            ItemStack candidate = storage[slot];
+            if (!matches(candidate, drugId)) {
+                continue;
+            }
+            decrement(candidate);
+            player.getInventory().setItem(slot, candidate.getAmount() <= 0 ? null : candidate);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean matches(ItemStack stack, String drugId) {
+        return stack != null && !stack.getType().isAir()
+                && items.identify(stack).map(DrugDefinition::id).filter(drugId::equals).isPresent();
+    }
+
+    private static void decrement(ItemStack stack) {
+        stack.setAmount(Math.max(0, stack.getAmount() - 1));
     }
 
     private static String plainName(String miniMessage) {

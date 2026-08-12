@@ -37,6 +37,21 @@ class DoseTrackerTest {
         assertEquals(0, tracker.current(player, 300));
     }
 
+    @Test
+    void keepsAnExactRunningTotalAcrossLargeWindowsAndBulkExpiry() {
+        MutableClock clock = new MutableClock(1_000L);
+        DoseTracker tracker = new DoseTracker(clock);
+        UUID player = UUID.randomUUID();
+
+        for (int index = 1; index <= 10_000; index++) {
+            assertEquals(index, tracker.add(player, 1, 300));
+        }
+        clock.millis = 301_001L;
+
+        assertEquals(0, tracker.current(player, 300));
+        assertEquals(3, tracker.add(player, 3, 300));
+    }
+
     private static final class MutableClock extends Clock {
         private long millis;
 

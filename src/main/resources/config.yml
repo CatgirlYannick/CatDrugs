@@ -24,47 +24,57 @@ features:
   overdose:
     enabled: true
 
-# Animated intake sequences. CatItems 0.3+ renders these through its public API;
+# Animated intake sequences. CatItems 0.5+ renders these as smooth player emotes;
 # CatDrugs keeps a smaller fallback so the plugin remains independently usable.
 consumption-animations:
+  schema-version: 2
   enabled: true
   default-duration-ticks: 32
   duration-by-preset:
-    smoke: 44
-    snort: 28
-    drink: 34
-    eat: 40
-    inhale: 36
-    inject: 30
-    ritual: 46
-    swallow: 26
+    smoke_joint: 48
+    smoke_pipe: 52
+    smoke_stimulant: 34
+    snort_line: 38
+    drink_bottle: 40
+    eat_edible: 44
+    inhale_vape: 42
+    inject_arm: 42
+    ritual_sway: 58
+    swallow_pill: 32
   category-presets:
-    cannabis: "smoke"
-    stimulant: "snort"
-    party: "snort"
-    dissociative: "snort"
-    depressant: "drink"
-    sedative: "drink"
-    herbal: "eat"
-    inhalant: "inhale"
-    synthetic: "inhale"
-    opioid: "inject"
-    medical: "inject"
-    psychedelic: "ritual"
+    cannabis: "smoke_joint"
+    stimulant: "snort_line"
+    party: "snort_line"
+    dissociative: "snort_line"
+    depressant: "drink_bottle"
+    sedative: "drink_bottle"
+    herbal: "eat_edible"
+    inhalant: "inhale_vape"
+    synthetic: "inhale_vape"
+    opioid: "inject_arm"
+    medical: "inject_arm"
+    psychedelic: "ritual_sway"
   drug-overrides:
-    joint: "smoke"
-    hashish: "smoke"
-    meth: "smoke"
-    crack: "smoke"
-    cannabis_oil: "inhale"
-    nicotine: "inhale"
-    dmt: "inhale"
-    edible: "eat"
-    coca_leaf: "eat"
-    caffeine: "drink"
-    alcohol: "drink"
-    absinthe: "drink"
-    moonshine: "drink"
+    weed: "smoke_joint"
+    joint: "smoke_joint"
+    hashish: "smoke_pipe"
+    opium: "smoke_pipe"
+    meth: "smoke_stimulant"
+    crack: "smoke_stimulant"
+    cocaine: "snort_line"
+    ketamine: "snort_line"
+    cannabis_oil: "inhale_vape"
+    nicotine: "inhale_vape"
+    dmt: "inhale_vape"
+    edible: "eat_edible"
+    coca_leaf: "eat_edible"
+    heroin: "inject_arm"
+    fentanyl: "inject_arm"
+    morphine: "inject_arm"
+    caffeine: "drink_bottle"
+    alcohol: "drink_bottle"
+    absinthe: "drink_bottle"
+    moonshine: "drink_bottle"
 
 overdose:
   # Dose points are added within this time window.
@@ -84,6 +94,14 @@ dose-reactions:
   # Hard-limited by the plugin to a maximum of 150 blocks.
   blackout-radius-blocks: 150
   safe-location-attempts: 24
+  vomiting:
+    bursts: 5
+    interval-ticks: 8
+    particle-count: 18
+    food-loss: 4
+    saturation-loss: 5.0
+    exhaustion: 1.8
+    movement-retention: 0.35
 
 logging:
   level: "INFO"

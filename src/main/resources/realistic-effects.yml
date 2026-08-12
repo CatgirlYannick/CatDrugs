@@ -5,10 +5,11 @@
 # This is not medical advice and does not define safe doses or real timing.
 # Custom effects: heartbeat, tremor, impaired_coordination, dehydration,
 # respiratory_depression, perception_shift, sedation, fatigue, appetite,
-# overheating, dizziness.
+# overheating, dizziness, camera_drift, visual_echo, auditory_distortion,
+# focus_pulse, time_distortion, muscle_tension.
 # ============================================================
 
-config-version: 1
+config-version: 2
 enabled: true
 replace-legacy-effects: true
 phase-messages: true
@@ -36,6 +37,7 @@ profiles:
         custom-effects:
           - {type: heartbeat, duration-seconds: 42, interval-ticks: 34, intensity: 2}
           - {type: tremor, duration-seconds: 30, interval-ticks: 55, intensity: 1}
+          - {type: focus_pulse, duration-seconds: 34, interval-ticks: 40, intensity: 2}
       peak:
         delay-seconds: 16
         potion-effects:
@@ -44,6 +46,7 @@ profiles:
         custom-effects:
           - {type: dehydration, duration-seconds: 42, interval-ticks: 70, intensity: 2}
           - {type: overheating, duration-seconds: 30, interval-ticks: 90, intensity: 1}
+          - {type: muscle_tension, duration-seconds: 34, interval-ticks: 48, intensity: 2}
       comedown:
         delay-seconds: 46
         potion-effects:
@@ -68,6 +71,7 @@ profiles:
           - {type: slow_falling, duration-seconds: 38, amplifier: 0}
         custom-effects:
           - {type: perception_shift, duration-seconds: 40, interval-ticks: 70, intensity: 1}
+          - {type: time_distortion, duration-seconds: 38, interval-ticks: 52, intensity: 1}
       comedown:
         delay-seconds: 55
         potion-effects:
@@ -92,6 +96,7 @@ profiles:
         custom-effects:
           - {type: respiratory_depression, duration-seconds: 38, interval-ticks: 50, intensity: 2}
           - {type: dizziness, duration-seconds: 28, interval-ticks: 70, intensity: 1}
+          - {type: focus_pulse, duration-seconds: 30, interval-ticks: 52, intensity: 2}
       comedown:
         delay-seconds: 58
         potion-effects:
@@ -116,6 +121,7 @@ profiles:
           - {type: nausea, duration-seconds: 24, amplifier: 0}
         custom-effects:
           - {type: respiratory_depression, duration-seconds: 30, interval-ticks: 60, intensity: 1}
+          - {type: camera_drift, duration-seconds: 30, interval-ticks: 34, intensity: 1}
       comedown:
         delay-seconds: 58
         potion-effects:
@@ -139,6 +145,7 @@ profiles:
           - {type: darkness, duration-seconds: 8, amplifier: 0}
         custom-effects:
           - {type: respiratory_depression, duration-seconds: 28, interval-ticks: 70, intensity: 1}
+          - {type: auditory_distortion, duration-seconds: 30, interval-ticks: 68, intensity: 1}
       comedown:
         delay-seconds: 62
         potion-effects:
@@ -155,6 +162,8 @@ profiles:
           - {type: nausea, duration-seconds: 30, amplifier: 0}
         custom-effects:
           - {type: perception_shift, duration-seconds: 72, interval-ticks: 50, intensity: 2}
+          - {type: visual_echo, duration-seconds: 68, interval-ticks: 42, intensity: 2}
+          - {type: auditory_distortion, duration-seconds: 64, interval-ticks: 58, intensity: 2}
       peak:
         delay-seconds: 24
         potion-effects:
@@ -163,6 +172,8 @@ profiles:
         custom-effects:
           - {type: impaired_coordination, duration-seconds: 38, interval-ticks: 45, intensity: 1}
           - {type: dizziness, duration-seconds: 30, interval-ticks: 65, intensity: 1}
+          - {type: camera_drift, duration-seconds: 36, interval-ticks: 28, intensity: 2}
+          - {type: time_distortion, duration-seconds: 34, interval-ticks: 46, intensity: 2}
       comedown:
         delay-seconds: 72
         potion-effects:
@@ -181,6 +192,7 @@ profiles:
         custom-effects:
           - {type: impaired_coordination, duration-seconds: 56, interval-ticks: 34, intensity: 2}
           - {type: perception_shift, duration-seconds: 54, interval-ticks: 62, intensity: 2}
+          - {type: camera_drift, duration-seconds: 52, interval-ticks: 32, intensity: 2}
       peak:
         delay-seconds: 20
         potion-effects:
@@ -188,6 +200,8 @@ profiles:
           - {type: slow_falling, duration-seconds: 34, amplifier: 0}
         custom-effects:
           - {type: dizziness, duration-seconds: 36, interval-ticks: 55, intensity: 2}
+          - {type: visual_echo, duration-seconds: 36, interval-ticks: 50, intensity: 2}
+          - {type: time_distortion, duration-seconds: 34, interval-ticks: 44, intensity: 2}
       comedown:
         delay-seconds: 64
         potion-effects:
@@ -204,6 +218,7 @@ profiles:
           - {type: jump_boost, duration-seconds: 38, amplifier: 0}
         custom-effects:
           - {type: heartbeat, duration-seconds: 55, interval-ticks: 38, intensity: 2}
+          - {type: focus_pulse, duration-seconds: 48, interval-ticks: 42, intensity: 3}
       peak:
         delay-seconds: 18
         potion-effects:
@@ -212,6 +227,7 @@ profiles:
         custom-effects:
           - {type: overheating, duration-seconds: 42, interval-ticks: 70, intensity: 2}
           - {type: dehydration, duration-seconds: 48, interval-ticks: 65, intensity: 2}
+          - {type: auditory_distortion, duration-seconds: 36, interval-ticks: 72, intensity: 1}
       comedown:
         delay-seconds: 62
         potion-effects:
@@ -236,6 +252,7 @@ profiles:
           - {type: darkness, duration-seconds: 7, amplifier: 0}
         custom-effects:
           - {type: respiratory_depression, duration-seconds: 24, interval-ticks: 50, intensity: 2}
+          - {type: camera_drift, duration-seconds: 24, interval-ticks: 30, intensity: 2}
       comedown:
         delay-seconds: 38
         potion-effects:
@@ -253,6 +270,7 @@ profiles:
         custom-effects:
           - {type: heartbeat, duration-seconds: 48, interval-ticks: 30, intensity: 3}
           - {type: tremor, duration-seconds: 42, interval-ticks: 38, intensity: 2}
+          - {type: muscle_tension, duration-seconds: 40, interval-ticks: 36, intensity: 3}
       peak:
         delay-seconds: 16
         potion-effects:
@@ -260,6 +278,8 @@ profiles:
         custom-effects:
           - {type: perception_shift, duration-seconds: 42, interval-ticks: 45, intensity: 2}
           - {type: impaired_coordination, duration-seconds: 38, interval-ticks: 32, intensity: 2}
+          - {type: visual_echo, duration-seconds: 40, interval-ticks: 38, intensity: 2}
+          - {type: camera_drift, duration-seconds: 36, interval-ticks: 24, intensity: 3}
       comedown:
         delay-seconds: 52
         potion-effects:

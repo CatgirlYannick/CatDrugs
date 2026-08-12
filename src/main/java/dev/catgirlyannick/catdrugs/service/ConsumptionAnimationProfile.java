@@ -19,14 +19,14 @@ public record ConsumptionAnimationProfile(String preset, int durationTicks) {
 
     static String defaultPreset(String category) {
         return switch (category == null ? "" : category.toLowerCase(java.util.Locale.ROOT)) {
-            case "cannabis" -> "smoke";
-            case "stimulant", "party", "dissociative" -> "snort";
-            case "depressant", "sedative" -> "drink";
-            case "herbal" -> "eat";
-            case "inhalant", "synthetic" -> "inhale";
-            case "opioid", "medical" -> "inject";
-            case "psychedelic" -> "ritual";
-            default -> "swallow";
+            case "cannabis" -> "smoke_joint";
+            case "stimulant", "party", "dissociative" -> "snort_line";
+            case "depressant", "sedative" -> "drink_bottle";
+            case "herbal" -> "eat_edible";
+            case "inhalant", "synthetic" -> "inhale_vape";
+            case "opioid", "medical" -> "inject_arm";
+            case "psychedelic" -> "ritual_sway";
+            default -> "swallow_pill";
         };
     }
 

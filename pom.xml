@@ -6,7 +6,7 @@
 
     <groupId>dev.catgirlyannick</groupId>
     <artifactId>catdrugs</artifactId>
-    <version>0.8.4-ALPHA</version>
+    <version>0.9.0-ALPHA</version>
 
     <properties>
         <maven.compiler.release>21</maven.compiler.release>
@@ -14,6 +14,7 @@
         <project.build.outputTimestamp>2026-08-12T00:00:00Z</project.build.outputTimestamp>
         <!-- Gegen die niedrigste Zielversion kompilieren, damit das JAR auf 1.21 bis 1.21.11 läuft. -->
         <paper.version>1.21-R0.1-SNAPSHOT</paper.version>
+        <packetevents.version>2.13.0</packetevents.version>
         <junit.version>5.12.2</junit.version>
     </properties>
 
@@ -22,6 +23,10 @@
             <id>papermc</id>
             <url>https://repo.papermc.io/repository/maven-public/</url>
         </repository>
+        <repository>
+            <id>codemc-releases</id>
+            <url>https://repo.codemc.io/repository/maven-releases/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -29,6 +34,12 @@
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
             <version>${paper.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.retrooper</groupId>
+            <artifactId>packetevents-spigot</artifactId>
+            <version>${packetevents.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

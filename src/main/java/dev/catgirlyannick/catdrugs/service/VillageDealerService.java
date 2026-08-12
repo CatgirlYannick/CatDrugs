@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -35,7 +37,14 @@ public final class VillageDealerService {
     private final NamespacedKey tradeSelectionKey;
     private final NamespacedKey villageSpawnKey;
     private final NamespacedKey naturalDealerKey;
+    private final NamespacedKey dealerRevisionKey;
     private YamlConfiguration config;
+    private List<String> cachedTradeIds = List.of();
+    private Set<String> cachedTradeIdSet = Set.of();
+    private Set<String> allowedWorlds = Set.of();
+    private List<String> allowedWorldPrefixes = List.of();
+    private boolean allWorldsAllowed = true;
+    private int dealerRevision;
 
     public VillageDealerService(JavaPlugin plugin, DrugRegistry registry, DrugItemFactory items,
                                 MessageService messages, YamlConfiguration config) {
@@ -48,10 +57,13 @@ public final class VillageDealerService {
         this.tradeSelectionKey = new NamespacedKey(plugin, "village_dealer_trades");
         this.villageSpawnKey = new NamespacedKey(plugin, "natural_village_dealer_spawned");
         this.naturalDealerKey = new NamespacedKey(plugin, "natural_village_dealer");
+        this.dealerRevisionKey = new NamespacedKey(plugin, "village_dealer_revision");
+        rebuildRuntimeCache();
     }
 
     public void reload(YamlConfiguration config) {
         this.config = config;
+        rebuildRuntimeCache();
     }
 
     public void scanChunk(Chunk chunk) {
@@ -65,7 +77,9 @@ public final class VillageDealerService {
         for (Entity entity : chunk.getEntities()) {
             if (entity instanceof Villager villager) {
                 if (isDealer(villager)) {
-                    refresh(villager);
+                    if (!isCurrent(villager)) {
+                        refresh(villager);
+                    }
                     present++;
                 } else if (villager.getProfession() == Villager.Profession.NITWIT
                         || config.getBoolean("village-dealers.allow-converting-employed-villagers", false)) {
@@ -207,11 +221,11 @@ public final class VillageDealerService {
         if (section == null) {
             return;
         }
-        List<String> enabledIds = enabledTradeIds(section);
+        List<String> enabledIds = cachedTradeIds;
         int configuredCount = Math.max(1, Math.min(config.getInt("village-dealers.trades-per-dealer", 5), 10));
         int expectedCount = Math.min(configuredCount, enabledIds.size());
         List<String> selectedIds = storedTradeIds(villager).stream()
-                .filter(enabledIds::contains)
+                .filter(cachedTradeIdSet::contains)
                 .distinct()
                 .toList();
         if (selectedIds.size() != expectedCount) {
@@ -239,6 +253,7 @@ public final class VillageDealerService {
             });
         }
         villager.setRecipes(trades);
+        villager.getPersistentDataContainer().set(dealerRevisionKey, PersistentDataType.INTEGER, dealerRevision);
     }
 
     private List<String> enabledTradeIds(ConfigurationSection explicitTrades) {
@@ -327,13 +342,45 @@ public final class VillageDealerService {
     }
 
     private boolean worldAllowed(String name) {
-        List<String> worlds = config.getStringList("village-dealers.allowed-worlds");
-        if (worlds.isEmpty()) {
+        if (allWorldsAllowed) {
             return true;
         }
         String lower = name.toLowerCase(Locale.ROOT);
-        return worlds.stream().map(value -> value.toLowerCase(Locale.ROOT))
-                .anyMatch(pattern -> pattern.equals("*") || pattern.equals(lower)
-                        || pattern.endsWith("*") && lower.startsWith(pattern.substring(0, pattern.length() - 1)));
+        return allowedWorlds.contains(lower)
+                || allowedWorldPrefixes.stream().anyMatch(lower::startsWith);
+    }
+
+    private boolean isCurrent(Villager villager) {
+        return !villager.getRecipes().isEmpty()
+                && villager.getPersistentDataContainer().getOrDefault(
+                dealerRevisionKey, PersistentDataType.INTEGER, Integer.MIN_VALUE) == dealerRevision;
+    }
+
+    private void rebuildRuntimeCache() {
+        ConfigurationSection trades = config.getConfigurationSection("village-dealers.trades");
+        cachedTradeIds = trades == null ? List.of() : enabledTradeIds(trades);
+        cachedTradeIdSet = Set.copyOf(cachedTradeIds);
+
+        Set<String> exact = new HashSet<>();
+        List<String> prefixes = new ArrayList<>();
+        List<String> configuredWorlds = config.getStringList("village-dealers.allowed-worlds");
+        allWorldsAllowed = configuredWorlds.isEmpty();
+        for (String configured : configuredWorlds) {
+            String pattern = configured.toLowerCase(Locale.ROOT);
+            if (pattern.equals("*")) {
+                allWorldsAllowed = true;
+                exact.clear();
+                prefixes.clear();
+                break;
+            }
+            if (pattern.endsWith("*")) {
+                prefixes.add(pattern.substring(0, pattern.length() - 1));
+            } else {
+                exact.add(pattern);
+            }
+        }
+        allowedWorlds = Set.copyOf(exact);
+        allowedWorldPrefixes = List.copyOf(prefixes);
+        dealerRevision = config.getValues(true).hashCode();
     }
 }

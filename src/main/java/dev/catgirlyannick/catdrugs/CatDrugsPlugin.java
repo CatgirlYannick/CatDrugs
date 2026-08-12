@@ -97,7 +97,8 @@ public final class CatDrugsPlugin extends JavaPlugin {
         getLogger().info("CatDrugs " + getPluginMeta().getVersion() + " is active: " + registry.consumables().size()
                 + " substances, " + recipeCount + " recipes, CatItems="
                 + catItemsAddon.status(registry.all()) + ", use animations="
-                + consumptionAnimations.providerStatus() + ".");
+                + consumptionAnimations.providerStatus() + ", perception="
+                + realisticEffects.perceptionProvider() + ".");
     }
 
     public boolean reloadCatDrugs() {

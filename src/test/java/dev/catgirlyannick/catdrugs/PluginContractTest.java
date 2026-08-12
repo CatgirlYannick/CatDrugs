@@ -33,6 +33,7 @@ class PluginContractTest {
         assertEquals("CatDrugs", plugin.getString("name"));
         assertEquals("1.21", plugin.getString("api-version"));
         assertTrue(plugin.getStringList("softdepend").contains("CatItems"));
+        assertTrue(plugin.getStringList("softdepend").contains("packetevents"));
         assertNotNull(plugin.getConfigurationSection("commands.catdrugs"));
     }
 
@@ -155,6 +156,17 @@ class PluginContractTest {
         assertNotNull(profiles);
         assertTrue(effects.getBoolean("enabled"));
         assertTrue(effects.getBoolean("replace-legacy-effects"));
+        assertEquals(2, effects.getInt("config-version"));
+        List<String> advancedCustomEffects = List.of("camera_drift", "visual_echo",
+                "auditory_distortion", "focus_pulse", "time_distortion", "muscle_tension");
+        List<String> configuredCustomEffects = profiles.getKeys(false).stream()
+                .map(profile -> profiles.getConfigurationSection(profile + ".phases"))
+                .filter(java.util.Objects::nonNull)
+                .flatMap(phases -> phases.getKeys(false).stream()
+                        .flatMap(phase -> phases.getMapList(phase + ".custom-effects").stream()))
+                .map(value -> String.valueOf(value.get("type")))
+                .toList();
+        assertTrue(configuredCustomEffects.containsAll(advancedCustomEffects), configuredCustomEffects::toString);
         definitions.getKeys(false).stream()
                 .filter(id -> definitions.getBoolean(id + ".consumable"))
                 .forEach(id -> {
@@ -182,6 +194,11 @@ class PluginContractTest {
         assertTrue(vomiting < blackout);
         assertTrue(config.getInt("dose-reactions.blackout-radius-blocks") <= 150);
         assertTrue(config.getInt("dose-reactions.blackout-duration-seconds") >= 3);
+        assertTrue(config.getInt("dose-reactions.vomiting.bursts") >= 3);
+        assertTrue(config.getInt("dose-reactions.vomiting.interval-ticks") >= 4);
+        assertTrue(config.getInt("dose-reactions.vomiting.particle-count") >= 10);
+        assertTrue(config.getDouble("dose-reactions.vomiting.movement-retention") > 0.0);
+        assertTrue(config.getDouble("dose-reactions.vomiting.movement-retention") < 1.0);
         YamlConfiguration messages = loadResource("messages.yml");
         assertNotNull(messages.getString("consumption.reactions.vomiting"));
         assertNotNull(messages.getString("consumption.reactions.blackout"));
@@ -192,13 +209,15 @@ class PluginContractTest {
     void consumptionAnimationsUseCatItemsCompatibleProfiles() {
         YamlConfiguration config = loadResource("config.yml");
         assertTrue(config.getBoolean("consumption-animations.enabled"));
-        for (String preset : List.of("smoke", "snort", "drink", "eat", "inhale", "inject", "ritual", "swallow")) {
+        for (String preset : List.of("smoke_joint", "smoke_pipe", "smoke_stimulant", "snort_line",
+                "drink_bottle", "eat_edible", "inhale_vape", "inject_arm", "ritual_sway", "swallow_pill")) {
             assertTrue(config.getInt("consumption-animations.duration-by-preset." + preset) >= 8, preset);
         }
-        assertEquals("smoke", config.getString("consumption-animations.drug-overrides.joint"));
-        assertEquals("smoke", config.getString("consumption-animations.drug-overrides.meth"));
-        assertEquals("drink", config.getString("consumption-animations.drug-overrides.alcohol"));
-        assertEquals("inhale", config.getString("consumption-animations.category-presets.inhalant"));
+        assertEquals(2, config.getInt("consumption-animations.schema-version"));
+        assertEquals("smoke_joint", config.getString("consumption-animations.drug-overrides.joint"));
+        assertEquals("smoke_stimulant", config.getString("consumption-animations.drug-overrides.meth"));
+        assertEquals("drink_bottle", config.getString("consumption-animations.drug-overrides.alcohol"));
+        assertEquals("inhale_vape", config.getString("consumption-animations.category-presets.inhalant"));
     }
 
     @Test

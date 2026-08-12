@@ -9,15 +9,21 @@ respiratory depression, perception shifts, sedation, fatigue, appetite,
 overheating, and dizziness. Repeated consumption inside the dose window can
 trigger negative reactions and damage.
 
+Additional CatDrugs-native effects include camera drift, visual echoes, spatial
+audio distortion, focus pulses, time distortion, and muscle tension. They do
+not depend on Vanilla potion effects; PacketEvents is optional for camera drift.
+
 The profiles are gameplay abstractions, not medical simulations or dosing and
 safety advice.
 
 ## Intake Animations
 
-Every consumable resolves to a configurable intake preset. The sequence plays
-hand movement, close-range particles, and synchronized sounds before its effects
-begin. CatItems 0.3 or newer renders the full animation through its public API.
-Without CatItems, CatDrugs automatically uses a smaller built-in fallback.
+Every consumable resolves to a configurable intake animation. CatItems 0.7
+renders self-made 3D item-model poses together with hand movement, the native
+use pose, staged approach/contact/release transitions, close-range particles,
+and synchronized sounds before effects begin.
+The item stays visible and is consumed only after the final keyframe. Without
+CatItems, CatDrugs automatically uses a smaller built-in fallback.
 
 ## Acute Dose Reactions
 
@@ -26,6 +32,10 @@ blackout. A blackout blinds, slows, and weakens the player. CatDrugs then checks
 up to the configured number of candidates within a hard maximum of 150 blocks.
 It teleports only when the ground, headroom, world border, and surroundings are
 safe. Otherwise the player wakes at the original location.
+
+Vomiting uses several directed visual bursts with matching splash, hurt, and
+burp sounds, a temporary crouched pose, reduced movement, and configurable
+food, saturation, and exhaustion loss. All pose state is restored afterward.
 
 ## Survival Acquisition
 

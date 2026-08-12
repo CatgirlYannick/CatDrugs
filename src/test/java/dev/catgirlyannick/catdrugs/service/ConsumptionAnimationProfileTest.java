@@ -13,23 +13,23 @@ class ConsumptionAnimationProfileTest {
     @Test
     void resolvesCategoryPresetDrugOverrideAndDuration() {
         YamlConfiguration config = new YamlConfiguration();
-        config.set("consumption-animations.category-presets.stimulant", "snort");
-        config.set("consumption-animations.drug-overrides.meth", "smoke");
-        config.set("consumption-animations.duration-by-preset.smoke", 44);
+        config.set("consumption-animations.category-presets.stimulant", "snort_line");
+        config.set("consumption-animations.drug-overrides.meth", "smoke_stimulant");
+        config.set("consumption-animations.duration-by-preset.smoke_stimulant", 34);
         DrugDefinition meth = new DrugDefinition("meth", true, true, "stimulant", "Meth", List.of(),
                 Material.SUGAR, "catdrugs:meth", 7, 4, List.of(), 0, List.of());
 
         ConsumptionAnimationProfile profile = ConsumptionAnimationProfile.resolve(config, meth);
 
-        assertEquals("smoke", profile.preset());
-        assertEquals(44, profile.durationTicks());
+        assertEquals("smoke_stimulant", profile.preset());
+        assertEquals(34, profile.durationTicks());
     }
 
     @Test
     void providesSafeDefaultsForEveryGameplayCategory() {
-        assertEquals("smoke", ConsumptionAnimationProfile.defaultPreset("cannabis"));
-        assertEquals("inject", ConsumptionAnimationProfile.defaultPreset("opioid"));
-        assertEquals("ritual", ConsumptionAnimationProfile.defaultPreset("psychedelic"));
-        assertEquals("swallow", ConsumptionAnimationProfile.defaultPreset("unknown"));
+        assertEquals("smoke_joint", ConsumptionAnimationProfile.defaultPreset("cannabis"));
+        assertEquals("inject_arm", ConsumptionAnimationProfile.defaultPreset("opioid"));
+        assertEquals("ritual_sway", ConsumptionAnimationProfile.defaultPreset("psychedelic"));
+        assertEquals("swallow_pill", ConsumptionAnimationProfile.defaultPreset("unknown"));
     }
 }

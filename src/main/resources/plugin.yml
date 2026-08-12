@@ -1,11 +1,11 @@
 name: CatDrugs
-version: '0.8.4-ALPHA'
+version: '0.9.0-ALPHA'
 main: dev.catgirlyannick.catdrugs.CatDrugsPlugin
 api-version: '1.21'
 authors: [CatgirlYannick]
 description: Configurable fictional drug gameplay, survival acquisition, village dealers, effects, and optional CatItems integration.
 prefix: CatDrugs
-softdepend: [CatItems]
+softdepend: [CatItems, packetevents]
 
 commands:
   catdrugs:

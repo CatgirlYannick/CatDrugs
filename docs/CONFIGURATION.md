@@ -11,10 +11,11 @@
 
 ## Intake Animations
 
-`config.yml > consumption-animations` controls the feature, category presets,
-individual drug overrides, and duration per preset. Durations are expressed in
-ticks. CatDrugs accepts values from 8 through 120 ticks and delays the gameplay
-effect until the sequence is complete.
+`config.yml > consumption-animations` maps categories and individual drugs to
+CatItems animation IDs and controls their duration. Durations are expressed in
+ticks. CatDrugs accepts values from 8 through 120 ticks and delays item removal
+and gameplay effects until the sequence is complete. The actual CatItems
+keyframes are editable in `plugins/CatItems/animations.yml`.
 
 ## Multi-Phase Effects
 
@@ -24,12 +25,22 @@ Each phase has a delay and lists of `potion-effects` and `custom-effects`.
 `replace-legacy-effects: true` replaces the old immediate and after-effects from
 `drugs.yml`; `false` runs both systems. `enabled: false` disables phased effects.
 
+Custom effects are implemented by CatDrugs rather than Vanilla potion effects.
+Available types include heartbeat, tremor, coordination, respiration, sedation,
+camera drift, visual echo, auditory distortion, focus pulse, time distortion,
+and muscle tension. PacketEvents is optional and used only for camera drift;
+all remaining custom effects use Paper directly.
+
 ## Dose Reactions
 
 `config.yml` contains separate thresholds for nausea, vomiting, and blackout.
 Each event fires when the active dose first crosses its threshold. Blackout
 duration, search radius, and candidate count are configurable. The plugin hard
 limits the radius to 150 blocks for performance and safety.
+
+`dose-reactions.vomiting` controls burst count and interval, particle density,
+food/saturation/exhaustion loss, and horizontal movement retention. The visual
+stream is a fictional gameplay effect and does not leave blocks or items behind.
 
 `item.catitems-id` is the optional custom-item ID. When CatItems or that ID is
 missing, CatDrugs uses `item.fallback-material`. Legacy `item.itemsadder-id`

@@ -13,7 +13,13 @@ public enum CustomEffectType {
     FATIGUE,
     APPETITE,
     OVERHEATING,
-    DIZZINESS;
+    DIZZINESS,
+    CAMERA_DRIFT,
+    VISUAL_ECHO,
+    AUDITORY_DISTORTION,
+    FOCUS_PULSE,
+    TIME_DISTORTION,
+    MUSCLE_TENSION;
 
     public static CustomEffectType parse(String value) {
         return valueOf(value.trim().toUpperCase(Locale.ROOT).replace('-', '_'));

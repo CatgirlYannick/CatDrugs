@@ -1,0 +1,145 @@
+CATDRUGS - INCLUDED DRUGS
+Version: 0.9.0-ALPHA
+Source: src/main/resources/drugs.yml
+Total drug/substance entries: 91
+
+This list includes raw Weed and the prepared Joint as separate gameplay items.
+Utensils, ingredients, the Antidote, Dealer Token, and other support items are
+not counted as drugs.
+
+============================================================
+CANNABIS (7)
+============================================================
+1. Weed [weed]
+2. Hash [hashish]
+3. Cannabis Oil [cannabis_oil]
+4. Herbal Edible [edible]
+5. Shatter [shatter]
+6. Herbal Wax [wax]
+7. Joint [joint]
+
+============================================================
+DEPRESSANTS (6)
+============================================================
+8. Heroin [heroin]
+9. Opioid Capsule [opioids]
+10. Fentanyl [fentanyl]
+11. Oxycodone [oxycodone]
+12. GHB [ghb]
+13. Lean [lean]
+
+============================================================
+DISSOCIATIVES (3)
+============================================================
+14. Ketamine [ketamine]
+15. PCP [pcp]
+16. DXM [dxm]
+
+============================================================
+HERBAL (2)
+============================================================
+17. Kratom [kratom]
+18. Kava [kava]
+
+============================================================
+INHALANTS (8)
+============================================================
+19. Nitrous Oxide [nitrous]
+20. Poppers [poppers]
+21. Ether [ether]
+22. Chloroform [chloroform]
+23. Butane [butane]
+24. Glue [glue]
+25. Aerosol [aerosol]
+26. Amyl Nitrite [amyl_nitrite]
+
+============================================================
+OPIOIDS (12)
+============================================================
+27. Morphine [morphine]
+28. Codeine [codeine]
+29. Hydrocodone [hydrocodone]
+30. Hydromorphone [hydromorphone]
+31. Methadone [methadone]
+32. Buprenorphine [buprenorphine]
+33. Tramadol [tramadol]
+34. Tapentadol [tapentadol]
+35. Carfentanil [carfentanil]
+36. Sufentanil [sufentanil]
+37. Desomorphine [desomorphine]
+38. Opium [opium]
+
+============================================================
+PARTY (1)
+============================================================
+39. MDMA [mdma]
+
+============================================================
+PSYCHEDELICS (14)
+============================================================
+40. LSD [lsd]
+41. Magic Mushrooms [mushrooms]
+42. DMT [dmt]
+43. Salvia [salvia]
+44. Mescaline [mescaline]
+45. Ayahuasca [ayahuasca]
+46. 2C-B [two_cb]
+47. 2C-I [two_ci]
+48. Peyote [peyote]
+49. Ibogaine [ibogaine]
+50. Psilocybin [psilocybin]
+51. Amanita [amanita]
+52. Morning Glory [morning_glory]
+53. Fly Agaric [fly_agaric]
+
+============================================================
+SEDATIVES (17)
+============================================================
+54. Diazepam [diazepam]
+55. Alprazolam [alprazolam]
+56. Zolpidem [zolpidem]
+57. Clonazepam [clonazepam]
+58. Barbiturates [barbiturates]
+59. Alcohol [alcohol]
+60. Absinthe [absinthe]
+61. Moonshine [moonshine]
+62. Lorazepam [lorazepam]
+63. Temazepam [temazepam]
+64. Midazolam [midazolam]
+65. Phenobarbital [phenobarbital]
+66. Quaaludes [quaaludes]
+67. Pregabalin [pregabalin]
+68. Gabapentin [gabapentin]
+69. Etizolam [etizolam]
+70. Phenibut [phenibut]
+
+============================================================
+STIMULANTS (20)
+============================================================
+71. Cocaine [cocaine]
+72. Meth [meth]
+73. Crack [crack]
+74. Speed [amphetamine]
+75. Cathinone [cathinone]
+76. Mephedrone [mephedrone]
+77. Methylphenidate [methylphenidate]
+78. Ecstasy [ecstasy]
+79. Molly [molly]
+80. Bath Salts [bath_salts]
+81. Flakka [flakka]
+82. Alpha-PVP [alpha_pvp]
+83. MDPV [mdpv]
+84. BK-MDMA [bk_mdma]
+85. Dexamphetamine [dexamphetamine]
+86. Lisdexamfetamine [lisdexamfetamine]
+87. Modafinil [modafinil]
+88. Caffeine [caffeine]
+89. Nicotine [nicotine]
+90. Coca Leaf [coca_leaf]
+
+============================================================
+SYNTHETIC (1)
+============================================================
+91. Spice [spice]
+
+Made By CatgirlYannick

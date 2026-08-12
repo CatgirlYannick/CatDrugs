@@ -13,16 +13,21 @@ They do not describe real-world production, dosing, or safety practices.
 ## Features
 
 - 90 configurable consumables with staged onset, active, and comedown phases
-- animated intake matched to smoking, snorting, drinking, eating, inhaling,
-  injecting, rituals, and swallowing
+- smooth body-emote intake matched to joints, pipes, stimulant smoking,
+  snorting, drinking, eating, vaping, injecting, rituals, and pills
 - tolerance, dependence, withdrawal, recovery, and mixed-category risks
 - configurable nausea, vomiting, blackout, and safe-location recovery events
+- custom camera drift, visual echoes, spatial audio distortion, focus pulses,
+  time distortion, muscle tension, heartbeat, tremor, and coordination effects
+- multi-burst vomiting with directed visible output, splash/hurt sounds,
+  temporary crouching, movement suppression, hunger, saturation, and exhaustion
 - fantasy crafting, structure loot, cultivation drops, and portable lab actions
 - persistent village pharmacists with normal villager AI and five saved offers
 - dealer reputation, quests, tokens, patrol encounters, and player rescue
 - MiniMessage/RGB names and messages rendered in Small Caps without replacing `ä`, `ö`, `ü` or `ß`
 - optional CatItems definitions, textures, and pharmacist appearance
 - complete Vanilla-item fallback when CatItems is not installed
+- cached runtime lookups and self-cleaning scheduled-task tracking for busy servers
 
 ## Requirements
 
@@ -30,11 +35,13 @@ They do not describe real-world production, dosing, or safety practices.
 - Paper 1.21 through 1.21.11
 - No required plugin dependencies
 - CatItems is optional and only supplies custom visuals and models
+- PacketEvents 2.13.0 is optional and enables subtle client-side camera drift;
+  the other custom effects work without it
 
 ## Installation
 
-1. Place `CatDrugs-0.8.4-ALPHA.jar` in the server's `plugins/` directory.
-2. Optionally install CatItems before the first start.
+1. Place `CatDrugs-0.9.0-ALPHA.jar` in the server's `plugins/` directory.
+2. Optionally install CatItems and PacketEvents before the first start.
 3. Start Paper once and review the generated files in `plugins/CatDrugs/`.
 4. When CatItems is installed, run `/catdrugs catitems verify`.
 5. Use `/catdrugs status` to check the active configuration.
