@@ -34,6 +34,23 @@ try {
             Move-Item -LiteralPath $artifact.FullName -Destination $archiveRoot -Force
         }
     }
+    $archiveParent = Join-Path (Split-Path $resolvedUploadRoot -Parent) "Archive"
+    if (Test-Path -LiteralPath $archiveParent -PathType Container) {
+        $resolvedArchiveParent = [System.IO.Path]::GetFullPath((Resolve-Path $archiveParent).Path)
+        $obsoleteArchives = Get-ChildItem -LiteralPath $resolvedArchiveParent -Directory |
+            Sort-Object LastWriteTime, Name -Descending |
+            Select-Object -Skip 2
+        foreach ($archive in $obsoleteArchives) {
+            $resolvedArchive = [System.IO.Path]::GetFullPath($archive.FullName)
+            if (-not $resolvedArchive.StartsWith(
+                    $resolvedArchiveParent + [System.IO.Path]::DirectorySeparatorChar,
+                    [System.StringComparison]::OrdinalIgnoreCase
+            )) {
+                throw "Unsicherer Archivpfad abgelehnt: $resolvedArchive"
+            }
+            Remove-Item -LiteralPath $resolvedArchive -Recurse -Force
+        }
+    }
     Copy-Item -LiteralPath "target\CatDrugs-$version.jar" -Destination $uploadRoot -Force
     Compress-Archive -Path (Join-Path $buildRoot "*") -DestinationPath (Join-Path $uploadRoot "CatDrugs-$version.zip") -Force
 } finally {
