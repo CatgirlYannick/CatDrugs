@@ -1,0 +1,482 @@
+# ============================================================
+# CatDrugs - survival, dealers, loot, and crafting
+# ============================================================
+# All recipes are deliberately fictional Minecraft combinations.
+# They do not represent real production methods.
+# ============================================================
+
+config-version: 1
+
+features:
+  village-dealers:
+    enabled: true
+  crafting:
+    enabled: true
+  loot:
+    enabled: true
+  cultivation:
+    enabled: true
+
+automatic-content:
+  # Keeps every enabled substance obtainable even when it has no hand-written entry below.
+  dealers:
+    include-all-drugs: true
+  recipes:
+    enabled: true
+
+utensils:
+  # The drug stays in the main hand; its reusable utensil must be in the off-hand.
+  category-defaults:
+    cannabis: "herbal_pipe"
+    depressant: "medicine_cup"
+    dissociative: "filter_straw"
+    herbal: "ritual_bowl"
+    inhalant: "vaporizer"
+    opioid: "sterile_applicator"
+    party: "filter_straw"
+    psychedelic: "ritual_bowl"
+    sedative: "medicine_cup"
+    stimulant: "filter_straw"
+    synthetic: "vaporizer"
+  overrides:
+    joint: "lighter"
+    edible: "ritual_bowl"
+    caffeine: "medicine_cup"
+    nicotine: "vaporizer"
+    coca_leaf: "ritual_bowl"
+    alcohol: "medicine_cup"
+    absinthe: "medicine_cup"
+    moonshine: "medicine_cup"
+  preparation-required:
+    weed: "joint"
+
+village-dealers:
+  display-name: "<light_purple><bold>Village Pharmacist</bold></light_purple>"
+  show-name: true
+  # Every generated vanilla village receives one persistent dealer.
+  # The village structure stores a marker so chunk reloads cannot create duplicates.
+  natural-village-spawning:
+    enabled: true
+    # Naturally spawned village dealers walk, look around, and use normal villager AI.
+    ai-enabled: true
+  # 0.35 means a 35 percent chance for each eligible nitwit.
+  # This fallback is used for villagers outside detected village structures.
+  conversion-chance: 0.35
+  max-per-chunk: 1
+  trades-per-dealer: 5
+  allow-converting-employed-villagers: false
+  allowed-worlds:
+    - "world*"
+  npc:
+    stationary: true
+    invulnerable: true
+    silent: true
+    no-collision: true
+    villager-type: "SWAMP"
+
+  trades:
+    weed: {enabled: true, item: "weed", amount: 1, emerald-cost: 4, max-uses: 12, villager-xp: 4}
+    hashish: {enabled: true, item: "hashish", amount: 1, emerald-cost: 6, max-uses: 10, villager-xp: 5}
+    cocaine: {enabled: true, item: "cocaine", amount: 1, emerald-cost: 12, max-uses: 6, villager-xp: 8}
+    meth: {enabled: true, item: "meth", amount: 1, emerald-cost: 14, max-uses: 6, villager-xp: 9}
+    heroin: {enabled: true, item: "heroin", amount: 1, emerald-cost: 15, max-uses: 5, villager-xp: 10}
+    mdma: {enabled: true, item: "mdma", amount: 1, emerald-cost: 10, max-uses: 8, villager-xp: 7}
+    lsd: {enabled: true, item: "lsd", amount: 1, emerald-cost: 9, max-uses: 8, villager-xp: 7}
+    mushrooms: {enabled: true, item: "mushrooms", amount: 1, emerald-cost: 7, max-uses: 10, villager-xp: 6}
+    ketamine: {enabled: true, item: "ketamine", amount: 1, emerald-cost: 11, max-uses: 6, villager-xp: 8}
+    opioids: {enabled: true, item: "opioids", amount: 1, emerald-cost: 10, max-uses: 7, villager-xp: 8}
+    crack: {enabled: true, item: "crack", amount: 1, emerald-cost: 13, max-uses: 6, villager-xp: 9}
+    amphetamine: {enabled: true, item: "amphetamine", amount: 1, emerald-cost: 11, max-uses: 8, villager-xp: 8}
+    fentanyl: {enabled: true, item: "fentanyl", amount: 1, emerald-cost: 18, max-uses: 4, villager-xp: 12}
+    oxycodone: {enabled: true, item: "oxycodone", amount: 1, emerald-cost: 12, max-uses: 6, villager-xp: 9}
+    ghb: {enabled: true, item: "ghb", amount: 1, emerald-cost: 10, max-uses: 7, villager-xp: 8}
+    pcp: {enabled: true, item: "pcp", amount: 1, emerald-cost: 15, max-uses: 5, villager-xp: 10}
+    dmt: {enabled: true, item: "dmt", amount: 1, emerald-cost: 13, max-uses: 6, villager-xp: 9}
+    salvia: {enabled: true, item: "salvia", amount: 1, emerald-cost: 8, max-uses: 9, villager-xp: 6}
+    spice: {enabled: true, item: "spice", amount: 1, emerald-cost: 9, max-uses: 8, villager-xp: 7}
+    nitrous: {enabled: true, item: "nitrous", amount: 1, emerald-cost: 7, max-uses: 10, villager-xp: 6}
+    mescaline: {enabled: true, item: "mescaline", amount: 1, emerald-cost: 10, max-uses: 7, villager-xp: 8}
+    ayahuasca: {enabled: true, item: "ayahuasca", amount: 1, emerald-cost: 12, max-uses: 6, villager-xp: 9}
+    kratom: {enabled: true, item: "kratom", amount: 1, emerald-cost: 7, max-uses: 9, villager-xp: 6}
+    kava: {enabled: true, item: "kava", amount: 1, emerald-cost: 6, max-uses: 10, villager-xp: 5}
+    poppers: {enabled: true, item: "poppers", amount: 1, emerald-cost: 8, max-uses: 8, villager-xp: 7}
+    ether: {enabled: true, item: "ether", amount: 1, emerald-cost: 11, max-uses: 6, villager-xp: 8}
+    lean: {enabled: true, item: "lean", amount: 1, emerald-cost: 10, max-uses: 7, villager-xp: 8}
+    morphine: {enabled: true, item: "morphine", amount: 1, emerald-cost: 14, max-uses: 5, villager-xp: 10}
+    codeine: {enabled: true, item: "codeine", amount: 1, emerald-cost: 10, max-uses: 7, villager-xp: 8}
+    diazepam: {enabled: true, item: "diazepam", amount: 1, emerald-cost: 9, max-uses: 8, villager-xp: 7}
+    alprazolam: {enabled: true, item: "alprazolam", amount: 1, emerald-cost: 11, max-uses: 7, villager-xp: 8}
+    zolpidem: {enabled: true, item: "zolpidem", amount: 1, emerald-cost: 9, max-uses: 8, villager-xp: 7}
+    two_cb: {enabled: true, item: "two_cb", amount: 1, emerald-cost: 13, max-uses: 6, villager-xp: 9}
+    two_ci: {enabled: true, item: "two_ci", amount: 1, emerald-cost: 13, max-uses: 6, villager-xp: 9}
+    cathinone: {enabled: true, item: "cathinone", amount: 1, emerald-cost: 10, max-uses: 7, villager-xp: 8}
+    mephedrone: {enabled: true, item: "mephedrone", amount: 1, emerald-cost: 12, max-uses: 6, villager-xp: 9}
+    methylphenidate: {enabled: true, item: "methylphenidate", amount: 1, emerald-cost: 9, max-uses: 8, villager-xp: 7}
+    clonazepam: {enabled: true, item: "clonazepam", amount: 1, emerald-cost: 11, max-uses: 7, villager-xp: 8}
+    barbiturates: {enabled: true, item: "barbiturates", amount: 1, emerald-cost: 13, max-uses: 6, villager-xp: 9}
+    dxm: {enabled: true, item: "dxm", amount: 1, emerald-cost: 8, max-uses: 9, villager-xp: 7}
+    # Dealers sell raw weed, never ready-made joints.
+    joint: {enabled: false, item: "joint", amount: 1, emerald-cost: 5, max-uses: 10, villager-xp: 5}
+
+loot:
+  tables:
+    village:
+      table-contains: "village"
+      item: "hemp_seed"
+      chance: 0.28
+      min-amount: 1
+      max-amount: 3
+    mineshaft:
+      table-contains: "abandoned_mineshaft"
+      item: "dried_herb"
+      chance: 0.20
+      min-amount: 1
+      max-amount: 2
+    stronghold:
+      table-contains: "stronghold"
+      item: "lsd"
+      chance: 0.08
+      min-amount: 1
+      max-amount: 1
+    dungeon:
+      table-contains: "simple_dungeon"
+      item: "oxycodone"
+      chance: 0.09
+      min-amount: 1
+      max-amount: 1
+    end-city:
+      table-contains: "end_city_treasure"
+      item: "dmt"
+      chance: 0.10
+      min-amount: 1
+      max-amount: 1
+    ancient-city:
+      table-contains: "ancient_city"
+      item: "fentanyl"
+      chance: 0.06
+      min-amount: 1
+      max-amount: 1
+
+cultivation:
+  # Mature wheat crops may drop additional fantasy herbs.
+  mature-wheat-drop-chance: 0.18
+
+advanced-gameplay:
+  progression:
+    enabled: true
+    # Tolerance shortens positive effect durations down to this multiplier.
+    minimum-effectiveness: 0.45
+    tolerance-message-level: 25
+  withdrawal:
+    enabled: true
+    check-seconds: 60
+    minimum-addiction: 20
+    delay-minutes: 15
+    message-cooldown-seconds: 180
+    # Continued abstinence slowly lowers dependence and tolerance.
+    recovery-after-minutes: 30
+  mixing:
+    enabled: true
+    window-seconds: 120
+    standard-extra-dose: 2
+    hazardous-extra-dose: 4
+  perception:
+    enabled: true
+    chance: 0.35
+    duration-seconds: 18
+  lab:
+    enabled: true
+    station-item: "alchemy_cauldron"
+    processing-seconds: 5
+    # Entirely fictional Minecraft transformations.
+    processes:
+      hemp_seed: "dried_herb"
+      dried_herb: "weed"
+      mushrooms: "psilocybin"
+      coca_leaf: "caffeine"
+      opium: "antidote"
+  dealer-quests:
+    enabled: true
+    minimum-trades: 3
+    maximum-trades: 6
+    token-reward: 2
+    token-rewards: ["joint", "mushrooms", "caffeine", "kratom", "kava"]
+    targets:
+      weed: true
+      joint: true
+      mushrooms: true
+      caffeine: true
+      kratom: true
+      kava: true
+  enforcement:
+    enabled: true
+    base-chance: 0.03
+    patrol-size: 2
+    lifetime-seconds: 45
+    confiscate-one-item: true
+  random-events:
+    enabled: true
+    supply-find-chance: 0.04
+    supply-items: ["hemp_seed", "dried_herb", "empty_pouch"]
+
+recipes:
+  antidote:
+    enabled: true
+    result: "antidote"
+    amount: 1
+    ingredients: ["minecraft:GHAST_TEAR", "minecraft:HONEY_BOTTLE", "minecraft:GLOW_BERRIES"]
+  alchemy_cauldron:
+    enabled: true
+    result: "alchemy_cauldron"
+    amount: 1
+    ingredients: ["minecraft:CAULDRON", "minecraft:AMETHYST_SHARD", "minecraft:BLAZE_POWDER"]
+  empty_pouch:
+    enabled: true
+    result: "empty_pouch"
+    amount: 2
+    ingredients: ["minecraft:RABBIT_HIDE", "minecraft:STRING"]
+  weed:
+    enabled: true
+    result: "weed"
+    amount: 1
+    ingredients: ["catdrugs:dried_herb", "minecraft:PAPER"]
+  hashish:
+    enabled: true
+    result: "hashish"
+    amount: 1
+    ingredients: ["catdrugs:dried_herb", "catdrugs:dried_herb", "catdrugs:dried_herb", "minecraft:HONEY_BOTTLE"]
+  cocaine:
+    enabled: true
+    result: "cocaine"
+    amount: 1
+    ingredients: ["minecraft:SUGAR", "minecraft:SUGAR", "minecraft:AMETHYST_SHARD", "minecraft:PAPER"]
+  meth:
+    enabled: true
+    result: "meth"
+    amount: 1
+    ingredients: ["minecraft:QUARTZ", "minecraft:QUARTZ", "minecraft:GLOWSTONE_DUST", "minecraft:GLASS_BOTTLE"]
+  heroin:
+    enabled: true
+    result: "heroin"
+    amount: 1
+    ingredients: ["minecraft:FERMENTED_SPIDER_EYE", "minecraft:COCOA_BEANS", "minecraft:GLASS_BOTTLE"]
+  mdma:
+    enabled: true
+    result: "mdma"
+    amount: 1
+    ingredients: ["minecraft:REDSTONE", "minecraft:GLOWSTONE_DUST", "minecraft:SUGAR"]
+  lsd:
+    enabled: true
+    result: "lsd"
+    amount: 1
+    ingredients: ["minecraft:GLOW_BERRIES", "minecraft:PAPER", "minecraft:AMETHYST_SHARD"]
+  mushrooms:
+    enabled: true
+    result: "mushrooms"
+    amount: 1
+    ingredients: ["minecraft:RED_MUSHROOM", "minecraft:BROWN_MUSHROOM", "minecraft:SUGAR"]
+  ketamine:
+    enabled: true
+    result: "ketamine"
+    amount: 1
+    ingredients: ["minecraft:PHANTOM_MEMBRANE", "minecraft:SUGAR", "minecraft:PAPER"]
+  opioids:
+    enabled: true
+    result: "opioids"
+    amount: 1
+    ingredients: ["minecraft:HONEY_BOTTLE", "minecraft:POPPY", "minecraft:PAPER"]
+  crack:
+    enabled: true
+    result: "crack"
+    amount: 1
+    ingredients: ["minecraft:AMETHYST_SHARD", "minecraft:FLINT", "minecraft:COAL", "minecraft:PAPER"]
+  amphetamine:
+    enabled: true
+    result: "amphetamine"
+    amount: 1
+    ingredients: ["minecraft:SUGAR", "minecraft:REDSTONE", "minecraft:RABBIT_FOOT", "minecraft:PAPER"]
+  fentanyl:
+    enabled: true
+    result: "fentanyl"
+    amount: 1
+    ingredients: ["minecraft:ECHO_SHARD", "minecraft:PHANTOM_MEMBRANE", "minecraft:HONEY_BOTTLE"]
+  oxycodone:
+    enabled: true
+    result: "oxycodone"
+    amount: 1
+    ingredients: ["minecraft:GOLDEN_CARROT", "minecraft:POPPY", "minecraft:PAPER"]
+  ghb:
+    enabled: true
+    result: "ghb"
+    amount: 1
+    ingredients: ["minecraft:CHORUS_FRUIT", "minecraft:HONEY_BOTTLE", "minecraft:GLASS_BOTTLE"]
+  pcp:
+    enabled: true
+    result: "pcp"
+    amount: 1
+    ingredients: ["minecraft:PHANTOM_MEMBRANE", "minecraft:ENDER_PEARL", "minecraft:QUARTZ"]
+  dmt:
+    enabled: true
+    result: "dmt"
+    amount: 1
+    ingredients: ["minecraft:WARPED_FUNGUS", "minecraft:BLAZE_POWDER", "minecraft:PAPER"]
+  salvia:
+    enabled: true
+    result: "salvia"
+    amount: 1
+    ingredients: ["minecraft:AZALEA_LEAVES", "minecraft:GLOW_BERRIES", "minecraft:PAPER"]
+  spice:
+    enabled: true
+    result: "spice"
+    amount: 1
+    ingredients: ["catdrugs:dried_herb", "minecraft:BLAZE_POWDER", "minecraft:PURPLE_DYE"]
+  nitrous:
+    enabled: true
+    result: "nitrous"
+    amount: 1
+    ingredients: ["minecraft:IRON_NUGGET", "minecraft:SNOWBALL", "minecraft:GLASS_BOTTLE"]
+  mescaline:
+    enabled: true
+    result: "mescaline"
+    amount: 1
+    ingredients: ["minecraft:CACTUS", "minecraft:GLOW_BERRIES", "minecraft:GLASS_BOTTLE"]
+  ayahuasca:
+    enabled: true
+    result: "ayahuasca"
+    amount: 1
+    ingredients: ["minecraft:TWISTING_VINES", "minecraft:CHORUS_FRUIT", "minecraft:HONEY_BOTTLE"]
+  kratom:
+    enabled: true
+    result: "kratom"
+    amount: 1
+    ingredients: ["minecraft:MANGROVE_LEAVES", "catdrugs:dried_herb", "minecraft:RABBIT_HIDE"]
+  kava:
+    enabled: true
+    result: "kava"
+    amount: 1
+    ingredients: ["minecraft:HANGING_ROOTS", "minecraft:COCOA_BEANS", "minecraft:BOWL"]
+  poppers:
+    enabled: true
+    result: "poppers"
+    amount: 1
+    ingredients: ["minecraft:BLUE_DYE", "minecraft:REDSTONE", "minecraft:GLASS_BOTTLE"]
+  ether:
+    enabled: true
+    result: "ether"
+    amount: 1
+    ingredients: ["minecraft:INK_SAC", "minecraft:PHANTOM_MEMBRANE", "minecraft:GLASS_BOTTLE"]
+  lean:
+    enabled: true
+    result: "lean"
+    amount: 1
+    ingredients: ["minecraft:PURPLE_DYE", "minecraft:SWEET_BERRIES", "minecraft:BOWL"]
+  morphine:
+    enabled: true
+    result: "morphine"
+    amount: 1
+    ingredients: ["minecraft:POPPY", "minecraft:GHAST_TEAR", "minecraft:GLASS_BOTTLE"]
+  codeine:
+    enabled: true
+    result: "codeine"
+    amount: 1
+    ingredients: ["minecraft:POPPY", "minecraft:QUARTZ", "minecraft:PAPER"]
+  diazepam:
+    enabled: true
+    result: "diazepam"
+    amount: 1
+    ingredients: ["minecraft:ORANGE_DYE", "minecraft:AMETHYST_SHARD", "minecraft:PAPER"]
+  alprazolam:
+    enabled: true
+    result: "alprazolam"
+    amount: 1
+    ingredients: ["minecraft:CYAN_DYE", "minecraft:QUARTZ", "minecraft:PAPER"]
+  zolpidem:
+    enabled: true
+    result: "zolpidem"
+    amount: 1
+    ingredients: ["minecraft:PINK_DYE", "minecraft:PHANTOM_MEMBRANE", "minecraft:PAPER"]
+  two_cb:
+    enabled: true
+    result: "two_cb"
+    amount: 1
+    ingredients: ["minecraft:MAGENTA_DYE", "minecraft:PRISMARINE_CRYSTALS", "minecraft:PAPER"]
+  two_ci:
+    enabled: true
+    result: "two_ci"
+    amount: 1
+    ingredients: ["minecraft:CYAN_DYE", "minecraft:GLOWSTONE_DUST", "minecraft:PAPER"]
+  cathinone:
+    enabled: true
+    result: "cathinone"
+    amount: 1
+    ingredients: ["minecraft:DEAD_BUSH", "minecraft:SUGAR", "minecraft:RABBIT_HIDE"]
+  mephedrone:
+    enabled: true
+    result: "mephedrone"
+    amount: 1
+    ingredients: ["minecraft:MAGENTA_DYE", "minecraft:SUGAR", "minecraft:AMETHYST_SHARD"]
+  methylphenidate:
+    enabled: true
+    result: "methylphenidate"
+    amount: 1
+    ingredients: ["minecraft:YELLOW_DYE", "minecraft:REDSTONE", "minecraft:PAPER"]
+  clonazepam:
+    enabled: true
+    result: "clonazepam"
+    amount: 1
+    ingredients: ["minecraft:BLUE_DYE", "minecraft:ECHO_SHARD", "minecraft:PAPER"]
+  barbiturates:
+    enabled: true
+    result: "barbiturates"
+    amount: 1
+    ingredients: ["minecraft:RED_DYE", "minecraft:FERMENTED_SPIDER_EYE", "minecraft:GLASS_BOTTLE"]
+  dxm:
+    enabled: true
+    result: "dxm"
+    amount: 1
+    ingredients: ["minecraft:ORANGE_DYE", "minecraft:HONEY_BOTTLE", "minecraft:GLASS_BOTTLE"]
+  rolling_paper:
+    enabled: true
+    result: "rolling_paper"
+    amount: 4
+    ingredients: ["minecraft:PAPER", "minecraft:SUGAR_CANE"]
+  lighter:
+    enabled: true
+    result: "lighter"
+    amount: 1
+    ingredients: ["minecraft:FLINT", "minecraft:IRON_NUGGET"]
+  herbal_pipe:
+    enabled: true
+    result: "herbal_pipe"
+    amount: 1
+    ingredients: ["minecraft:BRICK", "minecraft:GLASS_BOTTLE", "minecraft:STICK"]
+  filter_straw:
+    enabled: true
+    result: "filter_straw"
+    amount: 1
+    ingredients: ["minecraft:PAPER", "minecraft:BAMBOO"]
+  medicine_cup:
+    enabled: true
+    result: "medicine_cup"
+    amount: 1
+    ingredients: ["minecraft:GLASS_BOTTLE", "minecraft:CLAY_BALL"]
+  ritual_bowl:
+    enabled: true
+    result: "ritual_bowl"
+    amount: 1
+    ingredients: ["minecraft:BOWL", "minecraft:AMETHYST_SHARD"]
+  sterile_applicator:
+    enabled: true
+    result: "sterile_applicator"
+    amount: 1
+    ingredients: ["minecraft:GLASS_BOTTLE", "minecraft:IRON_NUGGET", "minecraft:QUARTZ"]
+  vaporizer:
+    enabled: true
+    result: "vaporizer"
+    amount: 1
+    ingredients: ["minecraft:COPPER_INGOT", "minecraft:REDSTONE", "minecraft:GLASS"]
+  joint:
+    enabled: true
+    result: "joint"
+    amount: 1
+    ingredients: ["catdrugs:weed", "catdrugs:rolling_paper"]

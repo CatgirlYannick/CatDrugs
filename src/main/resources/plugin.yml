@@ -1,0 +1,51 @@
+name: CatDrugs
+version: '0.8.2-ALPHA'
+main: dev.catgirlyannick.catdrugs.CatDrugsPlugin
+api-version: '1.21'
+authors: [CatgirlYannick]
+description: Configurable fictional drug gameplay, survival acquisition, village dealers, effects, and optional CatItems integration.
+prefix: CatDrugs
+softdepend: [CatItems]
+
+commands:
+  catdrugs:
+    description: Opens CatDrugs help and administration.
+    aliases: [cdrugs, drugs]
+    usage: /catdrugs <help|list|info|profile|quest|give|dealer|reset|catitems|reload|status>
+    permission: catdrugs.command
+
+permissions:
+  catdrugs.use:
+    description: Allows consuming CatDrugs items.
+    default: true
+  catdrugs.command:
+    description: Allows public CatDrugs commands.
+    default: true
+  catdrugs.admin:
+    description: Grants all CatDrugs administration permissions.
+    default: op
+    children:
+      catdrugs.admin.give: true
+      catdrugs.admin.dealer: true
+      catdrugs.admin.reload: true
+      catdrugs.admin.status: true
+      catdrugs.admin.catitems: true
+      catdrugs.admin.reset: true
+  catdrugs.admin.give:
+    description: Allows giving CatDrugs items.
+    default: op
+  catdrugs.admin.dealer:
+    description: Allows spawning and refreshing dealer villagers.
+    default: op
+  catdrugs.admin.reload:
+    description: Allows reloading safe CatDrugs configuration sections.
+    default: op
+  catdrugs.admin.status:
+    description: Allows viewing CatDrugs diagnostics.
+    default: op
+  catdrugs.admin.catitems:
+    description: Allows installing, verifying, and rebuilding the CatItems addon.
+    default: op
+  catdrugs.admin.reset:
+    description: Allows resetting CatDrugs player progression and active dose.
+    default: op

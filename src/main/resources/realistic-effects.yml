@@ -1,0 +1,291 @@
+# ============================================================
+# CatDrugs - phased symptom profiles
+# ============================================================
+# Fictional gameplay abstraction informed by broad health-risk categories.
+# This is not medical advice and does not define safe doses or real timing.
+# Custom effects: heartbeat, tremor, impaired_coordination, dehydration,
+# respiratory_depression, perception_shift, sedation, fatigue, appetite,
+# overheating, dizziness.
+# ============================================================
+
+config-version: 1
+enabled: true
+replace-legacy-effects: true
+phase-messages: true
+
+# Individual drugs can use a more suitable profile than their shop category.
+drug-overrides:
+  mdma: party
+  ecstasy: party
+  molly: party
+  alcohol: depressant
+  absinthe: depressant
+  moonshine: depressant
+  spice: synthetic
+  kratom: herbal
+  kava: herbal
+
+profiles:
+  stimulant:
+    phases:
+      onset:
+        delay-seconds: 2
+        potion-effects:
+          - {type: speed, duration-seconds: 32, amplifier: 1}
+          - {type: haste, duration-seconds: 32, amplifier: 1}
+        custom-effects:
+          - {type: heartbeat, duration-seconds: 42, interval-ticks: 34, intensity: 2}
+          - {type: tremor, duration-seconds: 30, interval-ticks: 55, intensity: 1}
+      peak:
+        delay-seconds: 16
+        potion-effects:
+          - {type: strength, duration-seconds: 20, amplifier: 0}
+          - {type: hunger, duration-seconds: 36, amplifier: 1}
+        custom-effects:
+          - {type: dehydration, duration-seconds: 42, interval-ticks: 70, intensity: 2}
+          - {type: overheating, duration-seconds: 30, interval-ticks: 90, intensity: 1}
+      comedown:
+        delay-seconds: 46
+        potion-effects:
+          - {type: weakness, duration-seconds: 42, amplifier: 1}
+          - {type: slowness, duration-seconds: 28, amplifier: 0}
+        custom-effects:
+          - {type: fatigue, duration-seconds: 45, interval-ticks: 60, intensity: 2}
+
+  cannabis:
+    phases:
+      onset:
+        delay-seconds: 3
+        potion-effects:
+          - {type: slowness, duration-seconds: 48, amplifier: 0}
+          - {type: resistance, duration-seconds: 38, amplifier: 0}
+        custom-effects:
+          - {type: impaired_coordination, duration-seconds: 52, interval-ticks: 38, intensity: 1}
+          - {type: heartbeat, duration-seconds: 32, interval-ticks: 50, intensity: 1}
+      peak:
+        delay-seconds: 18
+        potion-effects:
+          - {type: slow_falling, duration-seconds: 38, amplifier: 0}
+        custom-effects:
+          - {type: perception_shift, duration-seconds: 40, interval-ticks: 70, intensity: 1}
+      comedown:
+        delay-seconds: 55
+        potion-effects:
+          - {type: hunger, duration-seconds: 40, amplifier: 1}
+        custom-effects:
+          - {type: appetite, duration-seconds: 28, interval-ticks: 100, intensity: 1}
+          - {type: fatigue, duration-seconds: 32, interval-ticks: 70, intensity: 1}
+
+  opioid:
+    phases:
+      onset:
+        delay-seconds: 3
+        potion-effects:
+          - {type: resistance, duration-seconds: 45, amplifier: 1}
+          - {type: slowness, duration-seconds: 50, amplifier: 1}
+        custom-effects:
+          - {type: sedation, duration-seconds: 58, interval-ticks: 20, intensity: 2}
+      peak:
+        delay-seconds: 18
+        potion-effects:
+          - {type: weakness, duration-seconds: 40, amplifier: 0}
+        custom-effects:
+          - {type: respiratory_depression, duration-seconds: 38, interval-ticks: 50, intensity: 2}
+          - {type: dizziness, duration-seconds: 28, interval-ticks: 70, intensity: 1}
+      comedown:
+        delay-seconds: 58
+        potion-effects:
+          - {type: weakness, duration-seconds: 48, amplifier: 1}
+          - {type: hunger, duration-seconds: 35, amplifier: 1}
+        custom-effects:
+          - {type: fatigue, duration-seconds: 52, interval-ticks: 60, intensity: 2}
+
+  depressant:
+    phases:
+      onset:
+        delay-seconds: 3
+        potion-effects:
+          - {type: slowness, duration-seconds: 48, amplifier: 1}
+          - {type: weakness, duration-seconds: 42, amplifier: 0}
+        custom-effects:
+          - {type: impaired_coordination, duration-seconds: 52, interval-ticks: 35, intensity: 2}
+          - {type: sedation, duration-seconds: 52, interval-ticks: 20, intensity: 1}
+      peak:
+        delay-seconds: 20
+        potion-effects:
+          - {type: nausea, duration-seconds: 24, amplifier: 0}
+        custom-effects:
+          - {type: respiratory_depression, duration-seconds: 30, interval-ticks: 60, intensity: 1}
+      comedown:
+        delay-seconds: 58
+        potion-effects:
+          - {type: weakness, duration-seconds: 44, amplifier: 1}
+        custom-effects:
+          - {type: fatigue, duration-seconds: 48, interval-ticks: 65, intensity: 2}
+
+  sedative:
+    phases:
+      onset:
+        delay-seconds: 4
+        potion-effects:
+          - {type: slowness, duration-seconds: 52, amplifier: 1}
+          - {type: weakness, duration-seconds: 46, amplifier: 0}
+        custom-effects:
+          - {type: sedation, duration-seconds: 58, interval-ticks: 20, intensity: 2}
+          - {type: impaired_coordination, duration-seconds: 46, interval-ticks: 42, intensity: 1}
+      peak:
+        delay-seconds: 22
+        potion-effects:
+          - {type: darkness, duration-seconds: 8, amplifier: 0}
+        custom-effects:
+          - {type: respiratory_depression, duration-seconds: 28, interval-ticks: 70, intensity: 1}
+      comedown:
+        delay-seconds: 62
+        potion-effects:
+          - {type: weakness, duration-seconds: 50, amplifier: 1}
+        custom-effects:
+          - {type: fatigue, duration-seconds: 55, interval-ticks: 60, intensity: 2}
+
+  psychedelic:
+    phases:
+      onset:
+        delay-seconds: 5
+        potion-effects:
+          - {type: night_vision, duration-seconds: 68, amplifier: 0, icon: false}
+          - {type: nausea, duration-seconds: 30, amplifier: 0}
+        custom-effects:
+          - {type: perception_shift, duration-seconds: 72, interval-ticks: 50, intensity: 2}
+      peak:
+        delay-seconds: 24
+        potion-effects:
+          - {type: glowing, duration-seconds: 34, amplifier: 0, icon: false}
+          - {type: jump_boost, duration-seconds: 32, amplifier: 0}
+        custom-effects:
+          - {type: impaired_coordination, duration-seconds: 38, interval-ticks: 45, intensity: 1}
+          - {type: dizziness, duration-seconds: 30, interval-ticks: 65, intensity: 1}
+      comedown:
+        delay-seconds: 72
+        potion-effects:
+          - {type: slowness, duration-seconds: 35, amplifier: 0}
+          - {type: weakness, duration-seconds: 28, amplifier: 0}
+        custom-effects:
+          - {type: fatigue, duration-seconds: 40, interval-ticks: 70, intensity: 1}
+
+  dissociative:
+    phases:
+      onset:
+        delay-seconds: 4
+        potion-effects:
+          - {type: slowness, duration-seconds: 52, amplifier: 2}
+          - {type: resistance, duration-seconds: 40, amplifier: 1}
+        custom-effects:
+          - {type: impaired_coordination, duration-seconds: 56, interval-ticks: 34, intensity: 2}
+          - {type: perception_shift, duration-seconds: 54, interval-ticks: 62, intensity: 2}
+      peak:
+        delay-seconds: 20
+        potion-effects:
+          - {type: darkness, duration-seconds: 9, amplifier: 0}
+          - {type: slow_falling, duration-seconds: 34, amplifier: 0}
+        custom-effects:
+          - {type: dizziness, duration-seconds: 36, interval-ticks: 55, intensity: 2}
+      comedown:
+        delay-seconds: 64
+        potion-effects:
+          - {type: weakness, duration-seconds: 44, amplifier: 1}
+        custom-effects:
+          - {type: fatigue, duration-seconds: 46, interval-ticks: 65, intensity: 2}
+
+  party:
+    phases:
+      onset:
+        delay-seconds: 3
+        potion-effects:
+          - {type: speed, duration-seconds: 42, amplifier: 1}
+          - {type: jump_boost, duration-seconds: 38, amplifier: 0}
+        custom-effects:
+          - {type: heartbeat, duration-seconds: 55, interval-ticks: 38, intensity: 2}
+      peak:
+        delay-seconds: 18
+        potion-effects:
+          - {type: glowing, duration-seconds: 36, amplifier: 0, icon: false}
+          - {type: hunger, duration-seconds: 45, amplifier: 1}
+        custom-effects:
+          - {type: overheating, duration-seconds: 42, interval-ticks: 70, intensity: 2}
+          - {type: dehydration, duration-seconds: 48, interval-ticks: 65, intensity: 2}
+      comedown:
+        delay-seconds: 62
+        potion-effects:
+          - {type: weakness, duration-seconds: 52, amplifier: 1}
+          - {type: slowness, duration-seconds: 34, amplifier: 0}
+        custom-effects:
+          - {type: fatigue, duration-seconds: 55, interval-ticks: 55, intensity: 2}
+
+  inhalant:
+    phases:
+      onset:
+        delay-seconds: 1
+        potion-effects:
+          - {type: nausea, duration-seconds: 28, amplifier: 1}
+          - {type: slowness, duration-seconds: 34, amplifier: 1}
+        custom-effects:
+          - {type: dizziness, duration-seconds: 34, interval-ticks: 45, intensity: 2}
+          - {type: impaired_coordination, duration-seconds: 34, interval-ticks: 34, intensity: 2}
+      peak:
+        delay-seconds: 12
+        potion-effects:
+          - {type: darkness, duration-seconds: 7, amplifier: 0}
+        custom-effects:
+          - {type: respiratory_depression, duration-seconds: 24, interval-ticks: 50, intensity: 2}
+      comedown:
+        delay-seconds: 38
+        potion-effects:
+          - {type: weakness, duration-seconds: 40, amplifier: 1}
+        custom-effects:
+          - {type: fatigue, duration-seconds: 42, interval-ticks: 60, intensity: 2}
+
+  synthetic:
+    phases:
+      onset:
+        delay-seconds: 2
+        potion-effects:
+          - {type: speed, duration-seconds: 26, amplifier: 1}
+          - {type: nausea, duration-seconds: 38, amplifier: 1}
+        custom-effects:
+          - {type: heartbeat, duration-seconds: 48, interval-ticks: 30, intensity: 3}
+          - {type: tremor, duration-seconds: 42, interval-ticks: 38, intensity: 2}
+      peak:
+        delay-seconds: 16
+        potion-effects:
+          - {type: darkness, duration-seconds: 10, amplifier: 0}
+        custom-effects:
+          - {type: perception_shift, duration-seconds: 42, interval-ticks: 45, intensity: 2}
+          - {type: impaired_coordination, duration-seconds: 38, interval-ticks: 32, intensity: 2}
+      comedown:
+        delay-seconds: 52
+        potion-effects:
+          - {type: weakness, duration-seconds: 52, amplifier: 2}
+          - {type: slowness, duration-seconds: 42, amplifier: 1}
+        custom-effects:
+          - {type: fatigue, duration-seconds: 55, interval-ticks: 50, intensity: 3}
+
+  herbal:
+    phases:
+      onset:
+        delay-seconds: 5
+        potion-effects:
+          - {type: resistance, duration-seconds: 36, amplifier: 0}
+          - {type: slowness, duration-seconds: 38, amplifier: 0}
+        custom-effects:
+          - {type: sedation, duration-seconds: 42, interval-ticks: 25, intensity: 1}
+      peak:
+        delay-seconds: 24
+        potion-effects:
+          - {type: nausea, duration-seconds: 18, amplifier: 0}
+        custom-effects:
+          - {type: dizziness, duration-seconds: 24, interval-ticks: 75, intensity: 1}
+      comedown:
+        delay-seconds: 58
+        potion-effects:
+          - {type: weakness, duration-seconds: 30, amplifier: 0}
+        custom-effects:
+          - {type: fatigue, duration-seconds: 34, interval-ticks: 75, intensity: 1}

@@ -1,0 +1,86 @@
+# ============================================================
+# CatDrugs - visible messages (MiniMessage)
+# ============================================================
+config-version: 1
+
+prefix: '<dark_gray>[<gradient:#86efac:#c084fc>CatDrugs</gradient><dark_gray>] <reset>'
+
+errors:
+  no-permission: '<red>You do not have permission to do that.</red>'
+  unknown-command: '<red>Unknown subcommand. Use <white>/catdrugs help</white>.</red>'
+  unknown-drug: '<red>Unknown CatDrugs ID: <white>{drug}</white></red>'
+  player-not-found: '<red>Player <white>{player}</white> was not found.</red>'
+  cooldown: '<yellow>Wait another <white>{seconds}</white> seconds.</yellow>'
+  not-consumable: '<red>This item is an ingredient and cannot be consumed.</red>'
+  utensil-required: '<yellow>To use <white>{drug}</white>, hold <white>{utensil}</white> in your off-hand.</yellow>'
+  preparation-required: '<yellow><white>{drug}</white> is a raw ingredient. Craft it into <white>{result}</white> first.</yellow>'
+  feature-disabled: '<red>The consumption system is currently disabled.</red>'
+  no-villager-nearby: '<red>There is no villager within eight blocks.</red>'
+  usage-info: '<yellow>Usage: <white>/catdrugs info <id></white></yellow>'
+  usage-give: '<yellow>Usage: <white>/catdrugs give <player> <id> [amount]</white></yellow>'
+  usage-dealer: '<yellow>Usage: <white>/catdrugs dealer <spawn|refresh></white></yellow>'
+  usage-catitems: '<yellow>Usage: <white>/catdrugs catitems <install [force]|verify|rebuild></white></yellow>'
+  usage-reset: '<yellow>Usage: <white>/catdrugs reset <player></white></yellow>'
+  catitems-unavailable: '<red>CatItems is not installed or active. CatDrugs is using its vanilla fallback.</red>'
+
+consumption:
+  used: '<gray>You consumed <white>{drug}</white>. Its effects begin.</gray>'
+  overdose: '<red><bold>Warning:</bold> Your dose is critical ({points} points).</red>'
+  reactions:
+    nausea: '<yellow>Your accumulated dose ({points}) is making you severely nauseous.</yellow>'
+    vomiting: '<red>Your body reacts to the accumulated dose ({points}): you vomit.</red>'
+    blackout: '<dark_red><bold>Blackout.</bold> Your accumulated dose ({points}) overwhelms you.</dark_red>'
+    wake-up: '<gray>You regain consciousness somewhere nearby, weak and disoriented.</gray>'
+    wake-up-fallback: '<gray>You regain consciousness where you collapsed because no safe nearby location was found.</gray>'
+  phases:
+    onset: '<yellow>{drug}: the onset begins.</yellow>'
+    peak: '<gold>{drug}: the main effects are now strongest.</gold>'
+    comedown: '<dark_aqua>{drug}: the effects are wearing off.</dark_aqua>'
+    aftercare: '<gray>{drug}: lingering after-effects remain.</gray>'
+
+advanced:
+  tolerance: '<yellow>Tolerance level {level}: effects currently last about {percent}% as long.</yellow>'
+  withdrawal: '<red>Withdrawal symptoms are setting in (dependence level {level}).</red>'
+  mix: '<yellow>Mixed-category reaction: {first} and {second} strain your body.</yellow>'
+  mix-hazardous: '<dark_red><bold>Hazardous interaction:</bold> {first} and {second} sharply increase your dose risk.</dark_red>'
+  perception: '<light_purple>Your perception fractures into unfamiliar colors and sounds.</light_purple>'
+  lab-required: '<yellow>This ingredient requires a {station} in your off-hand.</yellow>'
+  lab-started: '<aqua>Fantasy lab process started: {input} → {output}.</aqua>'
+  lab-complete: '<green>Fantasy lab process complete: {output} was added to your inventory.</green>'
+  enforcement: '<red>A contraband patrol of {count} officers has tracked you down.</red>'
+  confiscated: '<red>The patrol confiscated one {drug}.</red>'
+  random-supply: '<green>A hidden supply cache contained: {item}.</green>'
+  profile: '<gray>Dependence: <white>{addiction}</white>/100 | Tolerance: <white>{tolerance}</white>/100 | Dealer reputation: <white>{reputation}</white></gray>'
+  quest-none: '<gray>No active dealer quest. Speak to a Village Pharmacist to receive one.</gray>'
+  quest-assigned: '<gold>Dealer quest: complete {required} purchases of {drug}.</gold>'
+  quest-status: '<gray>Dealer quest: {drug} — {progress}/{required} purchases.</gray>'
+  quest-progress: '<yellow>Dealer quest progress for {drug}: {progress}/{required}.</yellow>'
+  quest-complete: '<green>Dealer quest complete for {drug}. Reward: {reward} Dealer Tokens and bonus reputation.</green>'
+  token-redeemed: '<green>The pharmacist exchanged your Dealer Token for {item}.</green>'
+  rescue-not-needed: '<yellow>{player} does not currently need emergency stabilization.</yellow>'
+  rescue-helper: '<green>You stabilized {player} and gained dealer reputation.</green>'
+  rescue-target: '<green>{player} used an Antidote to stabilize you.</green>'
+
+commands:
+  list: '<gray>Available IDs: <white>{drugs}</white></gray>'
+  info: '<white>{name}</white> <dark_gray>|</dark_gray> <gray>ID: {id}, cooldown: {cooldown}s, effect phases: {effects}</gray>'
+
+help:
+  header: '<gradient:#86efac:#c084fc><bold>CatDrugs</bold></gradient> <gray>- fictional survival system</gray>'
+  public: '<gray>/catdrugs, /catdrugs list, /catdrugs info <id>, /catdrugs profile, /catdrugs quest</gray>'
+  admin: '<gray>Admin: give, dealer spawn|refresh, reset, catitems install|verify|rebuild, reload, status</gray>'
+
+admin:
+  given: '<green>Gave {amount}x <white>{drug}</white> to <white>{player}</white>.</green>'
+  dealer-spawned: '<green>A village pharmacist was spawned.</green>'
+  dealer-refreshed: '<green>The nearest villager is now a village pharmacist.</green>'
+  reload-success: '<green>Reload complete. Configurations, recipes, and messages were updated.</green>'
+  reload-failed: '<red>Reload cancelled: at least one configuration is invalid. Check the console for details.</red>'
+  status: '<gray>Version {version} | Substances: {drugs} | Dealers loaded: {dealers} | CatItems: {catitems} | Your dose: {dose}</gray>'
+  catitems-installed: '<green>CatItems addon: wrote {items} item definitions and {assets} assets; {conflicts} protected conflicts. Then use <white>/catdrugs catitems rebuild</white>.</green>'
+  catitems-install-failed: '<red>CatItems addon installation failed: {error}</red>'
+  catitems-verify-success: '<green>CatItems is ready: all {items} CatDrugs runtime items are registered.</green>'
+  catitems-verify-missing: '<yellow>Missing CatItems IDs: <white>{missing}</white>. Install the addon and rebuild the pack.</yellow>'
+  catitems-rebuild-started: '<green>CatItems was reloaded and the pack was rebuilt.</green>'
+  catitems-rebuild-failed: '<red>The CatItems reload could not be started.</red>'
+  progress-reset: '<green>Reset CatDrugs progression and active dose for <white>{player}</white>.</green>'

@@ -1,0 +1,1929 @@
+# ============================================================
+# CatDrugs - substances and effects
+# ============================================================
+# Purpose:
+#   Items, cooldowns, dose points, and potion effects.
+#
+# Effect rules:
+#   - duration-seconds: 1 through 3600
+#   - amplifier: 0 is level I, 1 is level II, and so on
+#   - after-delay-ticks: 20 ticks equal one second
+#
+# Effects are abstract gameplay mechanics, not medical claims.
+# ============================================================
+
+config-version: 1
+
+drugs:
+  weed:
+    enabled: true
+    consumable: false
+    category: "cannabis"
+    display-name: "<green><bold>Weed</bold></green>"
+    lore:
+      - "<gray>A bundle of dried fantasy herbs.</gray>"
+      - "<dark_gray>Craft with Rolling Paper into a Joint</dark_gray>"
+    item:
+      fallback-material: "DRIED_KELP"
+      catitems-id: "catdrugs:weed"
+    consumption: {cooldown-seconds: 8, dose-points: 2}
+    effects:
+      after-delay-ticks: 500
+      immediate:
+        - {type: "slow_falling", duration-seconds: 35, amplifier: 0, particles: true}
+        - {type: "resistance", duration-seconds: 25, amplifier: 0, particles: true}
+        - {type: "slowness", duration-seconds: 20, amplifier: 0, particles: true}
+      after:
+        - {type: "hunger", duration-seconds: 25, amplifier: 1, particles: true}
+
+  hashish:
+    enabled: true
+    consumable: true
+    category: "cannabis"
+    display-name: "<gold><bold>Hash</bold></gold>"
+    lore:
+      - "<gray>Concentrated fantasy herb resin.</gray>"
+      - "<dark_gray>Stronger and slower than weed</dark_gray>"
+    item:
+      fallback-material: "COCOA_BEANS"
+      catitems-id: "catdrugs:hashish"
+    consumption: {cooldown-seconds: 10, dose-points: 3}
+    effects:
+      after-delay-ticks: 500
+      immediate:
+        - {type: "resistance", duration-seconds: 40, amplifier: 1, particles: true}
+        - {type: "slowness", duration-seconds: 35, amplifier: 1, particles: true}
+        - {type: "slow_falling", duration-seconds: 30, amplifier: 0, particles: true}
+      after:
+        - {type: "hunger", duration-seconds: 35, amplifier: 2, particles: true}
+
+  cocaine:
+    enabled: true
+    consumable: true
+    category: "stimulant"
+    display-name: "<white><bold>Cocaine</bold></white>"
+    lore:
+      - "<gray>Bright alchemical powder.</gray>"
+      - "<dark_gray>Fast boost, hard crash</dark_gray>"
+    item:
+      fallback-material: "SUGAR"
+      catitems-id: "catdrugs:cocaine"
+    consumption: {cooldown-seconds: 7, dose-points: 4}
+    effects:
+      after-delay-ticks: 500
+      immediate:
+        - {type: "speed", duration-seconds: 25, amplifier: 2, particles: true}
+        - {type: "haste", duration-seconds: 25, amplifier: 1, particles: true}
+        - {type: "strength", duration-seconds: 18, amplifier: 0, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 35, amplifier: 1, particles: true}
+        - {type: "hunger", duration-seconds: 35, amplifier: 2, particles: true}
+
+  meth:
+    enabled: true
+    consumable: true
+    category: "stimulant"
+    display-name: "<aqua><bold>Meth</bold></aqua>"
+    lore:
+      - "<gray>Blue crystals from Nether alchemy.</gray>"
+      - "<dark_gray>A very strong and risky boost</dark_gray>"
+    item:
+      fallback-material: "PRISMARINE_CRYSTALS"
+      catitems-id: "catdrugs:meth"
+    consumption: {cooldown-seconds: 10, dose-points: 5}
+    effects:
+      after-delay-ticks: 600
+      immediate:
+        - {type: "speed", duration-seconds: 35, amplifier: 3, particles: true}
+        - {type: "haste", duration-seconds: 35, amplifier: 2, particles: true}
+        - {type: "strength", duration-seconds: 25, amplifier: 1, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 50, amplifier: 2, particles: true}
+        - {type: "hunger", duration-seconds: 50, amplifier: 3, particles: true}
+        - {type: "slowness", duration-seconds: 25, amplifier: 1, particles: true}
+
+  heroin:
+    enabled: true
+    consumable: true
+    category: "depressant"
+    display-name: "<dark_purple><bold>Heroin</bold></dark_purple>"
+    lore:
+      - "<gray>A dark potion from forbidden fantasy alchemy.</gray>"
+      - "<dark_gray>Numbing and highly dangerous</dark_gray>"
+    item:
+      fallback-material: "HONEY_BOTTLE"
+      catitems-id: "catdrugs:heroin"
+    consumption: {cooldown-seconds: 12, dose-points: 6}
+    effects:
+      after-delay-ticks: 500
+      immediate:
+        - {type: "resistance", duration-seconds: 35, amplifier: 2, particles: true}
+        - {type: "regeneration", duration-seconds: 14, amplifier: 1, particles: true}
+        - {type: "slowness", duration-seconds: 40, amplifier: 2, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 55, amplifier: 2, particles: true}
+        - {type: "nausea", duration-seconds: 20, amplifier: 0, particles: true}
+
+  mdma:
+    enabled: true
+    consumable: true
+    category: "party"
+    display-name: "<rainbow><bold>MDMA</bold></rainbow>"
+    lore:
+      - "<gray>A glowing party pill.</gray>"
+      - "<dark_gray>Movement and luck followed by exhaustion</dark_gray>"
+    item:
+      fallback-material: "PINK_DYE"
+      catitems-id: "catdrugs:mdma"
+    consumption: {cooldown-seconds: 9, dose-points: 4}
+    effects:
+      after-delay-ticks: 600
+      immediate:
+        - {type: "speed", duration-seconds: 35, amplifier: 1, particles: true}
+        - {type: "jump_boost", duration-seconds: 35, amplifier: 1, particles: true}
+        - {type: "luck", duration-seconds: 45, amplifier: 0, particles: true}
+        - {type: "glowing", duration-seconds: 20, amplifier: 0, particles: false}
+      after:
+        - {type: "weakness", duration-seconds: 35, amplifier: 1, particles: true}
+        - {type: "hunger", duration-seconds: 30, amplifier: 2, particles: true}
+
+  lsd:
+    enabled: true
+    consumable: true
+    category: "psychedelic"
+    display-name: "<gradient:#f472b6:#60a5fa><bold>LSD</bold></gradient>"
+    lore:
+      - "<gray>A tiny magical paper square.</gray>"
+      - "<dark_gray>Alters perception</dark_gray>"
+    item:
+      fallback-material: "PAPER"
+      catitems-id: "catdrugs:lsd"
+    consumption: {cooldown-seconds: 10, dose-points: 4}
+    effects:
+      after-delay-ticks: 700
+      immediate:
+        - {type: "night_vision", duration-seconds: 70, amplifier: 0, particles: false}
+        - {type: "nausea", duration-seconds: 45, amplifier: 0, particles: true}
+        - {type: "glowing", duration-seconds: 35, amplifier: 0, particles: false}
+      after:
+        - {type: "blindness", duration-seconds: 8, amplifier: 0, particles: true}
+        - {type: "slowness", duration-seconds: 20, amplifier: 0, particles: true}
+
+  mushrooms:
+    enabled: true
+    consumable: true
+    category: "psychedelic"
+    display-name: "<red><bold>Magic Mushrooms</bold></red>"
+    lore:
+      - "<gray>Speckled mushrooms from another dimension.</gray>"
+      - "<dark_gray>Jumpy and disorienting</dark_gray>"
+    item:
+      fallback-material: "RED_MUSHROOM"
+      catitems-id: "catdrugs:mushrooms"
+    consumption: {cooldown-seconds: 9, dose-points: 3}
+    effects:
+      after-delay-ticks: 600
+      immediate:
+        - {type: "night_vision", duration-seconds: 55, amplifier: 0, particles: false}
+        - {type: "jump_boost", duration-seconds: 35, amplifier: 2, particles: true}
+        - {type: "nausea", duration-seconds: 30, amplifier: 0, particles: true}
+      after:
+        - {type: "slowness", duration-seconds: 20, amplifier: 0, particles: true}
+
+  ketamine:
+    enabled: true
+    consumable: true
+    category: "dissociative"
+    display-name: "<light_purple><bold>Ketamine</bold></light_purple>"
+    lore:
+      - "<gray>A pouch of violet dream dust.</gray>"
+      - "<dark_gray>Strong dissociation and sluggishness</dark_gray>"
+    item:
+      fallback-material: "MAGENTA_DYE"
+      catitems-id: "catdrugs:ketamine"
+    consumption: {cooldown-seconds: 11, dose-points: 5}
+    effects:
+      after-delay-ticks: 500
+      immediate:
+        - {type: "resistance", duration-seconds: 30, amplifier: 2, particles: true}
+        - {type: "slowness", duration-seconds: 35, amplifier: 3, particles: true}
+        - {type: "slow_falling", duration-seconds: 30, amplifier: 0, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 40, amplifier: 2, particles: true}
+        - {type: "blindness", duration-seconds: 7, amplifier: 0, particles: true}
+
+  opioids:
+    enabled: true
+    consumable: true
+    category: "depressant"
+    display-name: "<gold><bold>Opioid Capsule</bold></gold>"
+    lore:
+      - "<gray>A rare capsule from dungeon laboratories.</gray>"
+      - "<dark_gray>Pain-dampening but taxing</dark_gray>"
+    item:
+      fallback-material: "ORANGE_DYE"
+      catitems-id: "catdrugs:opioids"
+    consumption: {cooldown-seconds: 10, dose-points: 5}
+    effects:
+      after-delay-ticks: 600
+      immediate:
+        - {type: "regeneration", duration-seconds: 18, amplifier: 1, particles: true}
+        - {type: "resistance", duration-seconds: 30, amplifier: 1, particles: true}
+        - {type: "slowness", duration-seconds: 30, amplifier: 1, particles: true}
+      after:
+        - {type: "hunger", duration-seconds: 35, amplifier: 2, particles: true}
+        - {type: "weakness", duration-seconds: 30, amplifier: 1, particles: true}
+
+  crack:
+    enabled: true
+    consumable: true
+    category: "stimulant"
+    display-name: "<white><bold>Crack</bold></white>"
+    lore:
+      - "<gray>A pouch of brittle alchemical crystals.</gray>"
+      - "<dark_gray>Short boost with a severe crash</dark_gray>"
+    item:
+      fallback-material: "FLINT"
+      catitems-id: "catdrugs:crack"
+    consumption: {cooldown-seconds: 8, dose-points: 5}
+    effects:
+      after-delay-ticks: 360
+      immediate:
+        - {type: "speed", duration-seconds: 18, amplifier: 3, particles: true}
+        - {type: "haste", duration-seconds: 18, amplifier: 2, particles: true}
+        - {type: "strength", duration-seconds: 14, amplifier: 1, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 45, amplifier: 2, particles: true}
+        - {type: "hunger", duration-seconds: 45, amplifier: 3, particles: true}
+        - {type: "nausea", duration-seconds: 12, amplifier: 0, particles: true}
+
+  amphetamine:
+    enabled: true
+    consumable: true
+    category: "stimulant"
+    display-name: "<yellow><bold>Speed</bold></yellow>"
+    lore:
+      - "<gray>A charged powder packet from redstone alchemy.</gray>"
+      - "<dark_gray>Long-lasting drive followed by exhaustion</dark_gray>"
+    item:
+      fallback-material: "GLOWSTONE_DUST"
+      catitems-id: "catdrugs:amphetamine"
+    consumption: {cooldown-seconds: 9, dose-points: 4}
+    effects:
+      after-delay-ticks: 600
+      immediate:
+        - {type: "speed", duration-seconds: 40, amplifier: 1, particles: true}
+        - {type: "haste", duration-seconds: 40, amplifier: 1, particles: true}
+        - {type: "strength", duration-seconds: 25, amplifier: 0, particles: true}
+      after:
+        - {type: "hunger", duration-seconds: 45, amplifier: 2, particles: true}
+        - {type: "slowness", duration-seconds: 25, amplifier: 1, particles: true}
+
+  fentanyl:
+    enabled: true
+    consumable: true
+    category: "depressant"
+    display-name: "<dark_aqua><bold>Fentanyl</bold></dark_aqua>"
+    lore:
+      - "<gray>A sealed vial from End City laboratories.</gray>"
+      - "<dark_gray>Extremely dangerous sedation</dark_gray>"
+    item:
+      fallback-material: "ECHO_SHARD"
+      catitems-id: "catdrugs:fentanyl"
+    consumption: {cooldown-seconds: 14, dose-points: 7}
+    effects:
+      after-delay-ticks: 420
+      immediate:
+        - {type: "resistance", duration-seconds: 30, amplifier: 2, particles: true}
+        - {type: "regeneration", duration-seconds: 12, amplifier: 1, particles: true}
+        - {type: "slowness", duration-seconds: 35, amplifier: 3, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 60, amplifier: 3, particles: true}
+        - {type: "blindness", duration-seconds: 10, amplifier: 0, particles: true}
+        - {type: "nausea", duration-seconds: 25, amplifier: 0, particles: true}
+
+  oxycodone:
+    enabled: true
+    consumable: true
+    category: "depressant"
+    display-name: "<blue><bold>Oxycodone</bold></blue>"
+    lore:
+      - "<gray>Blue capsules from an abandoned healing station.</gray>"
+      - "<dark_gray>Depressant and taxing</dark_gray>"
+    item:
+      fallback-material: "LIGHT_BLUE_DYE"
+      catitems-id: "catdrugs:oxycodone"
+    consumption: {cooldown-seconds: 11, dose-points: 5}
+    effects:
+      after-delay-ticks: 560
+      immediate:
+        - {type: "regeneration", duration-seconds: 16, amplifier: 1, particles: true}
+        - {type: "resistance", duration-seconds: 32, amplifier: 1, particles: true}
+        - {type: "slowness", duration-seconds: 28, amplifier: 1, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 40, amplifier: 1, particles: true}
+        - {type: "hunger", duration-seconds: 35, amplifier: 2, particles: true}
+
+  ghb:
+    enabled: true
+    consumable: true
+    category: "depressant"
+    display-name: "<aqua><bold>GHB</bold></aqua>"
+    lore:
+      - "<gray>A cobalt-blue sleeping potion from fantasy alchemy.</gray>"
+      - "<dark_gray>Strongly slowing</dark_gray>"
+    item:
+      fallback-material: "GLASS_BOTTLE"
+      catitems-id: "catdrugs:ghb"
+    consumption: {cooldown-seconds: 12, dose-points: 5}
+    effects:
+      after-delay-ticks: 440
+      immediate:
+        - {type: "resistance", duration-seconds: 30, amplifier: 1, particles: true}
+        - {type: "slowness", duration-seconds: 38, amplifier: 2, particles: true}
+        - {type: "slow_falling", duration-seconds: 24, amplifier: 0, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 45, amplifier: 2, particles: true}
+        - {type: "blindness", duration-seconds: 8, amplifier: 0, particles: true}
+
+  pcp:
+    enabled: true
+    consumable: true
+    category: "dissociative"
+    display-name: "<gray><bold>PCP</bold></gray>"
+    lore:
+      - "<gray>Prismatic dust from an Ender ruin.</gray>"
+      - "<dark_gray>Powerful, confusing, and risky</dark_gray>"
+    item:
+      fallback-material: "QUARTZ"
+      catitems-id: "catdrugs:pcp"
+    consumption: {cooldown-seconds: 12, dose-points: 6}
+    effects:
+      after-delay-ticks: 460
+      immediate:
+        - {type: "strength", duration-seconds: 28, amplifier: 1, particles: true}
+        - {type: "resistance", duration-seconds: 28, amplifier: 1, particles: true}
+        - {type: "nausea", duration-seconds: 30, amplifier: 0, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 45, amplifier: 2, particles: true}
+        - {type: "slowness", duration-seconds: 35, amplifier: 2, particles: true}
+
+  dmt:
+    enabled: true
+    consumable: true
+    category: "psychedelic"
+    display-name: "<gold><bold>DMT</bold></gold>"
+    lore:
+      - "<gray>An orange crystal amulet from the Nether.</gray>"
+      - "<dark_gray>A short dimensional rush</dark_gray>"
+    item:
+      fallback-material: "BLAZE_POWDER"
+      catitems-id: "catdrugs:dmt"
+    consumption: {cooldown-seconds: 10, dose-points: 4}
+    effects:
+      after-delay-ticks: 360
+      immediate:
+        - {type: "night_vision", duration-seconds: 38, amplifier: 0, particles: false}
+        - {type: "nausea", duration-seconds: 28, amplifier: 0, particles: true}
+        - {type: "levitation", duration-seconds: 4, amplifier: 0, particles: true}
+        - {type: "glowing", duration-seconds: 24, amplifier: 0, particles: false}
+      after:
+        - {type: "blindness", duration-seconds: 9, amplifier: 0, particles: true}
+        - {type: "slowness", duration-seconds: 20, amplifier: 1, particles: true}
+
+  salvia:
+    enabled: true
+    consumable: true
+    category: "psychedelic"
+    display-name: "<dark_green><bold>Salvia</bold></dark_green>"
+    lore:
+      - "<gray>A twisted leaf from an enchanted grove.</gray>"
+      - "<dark_gray>Erratic perception</dark_gray>"
+    item:
+      fallback-material: "AZALEA_LEAVES"
+      catitems-id: "catdrugs:salvia"
+    consumption: {cooldown-seconds: 9, dose-points: 3}
+    effects:
+      after-delay-ticks: 400
+      immediate:
+        - {type: "nausea", duration-seconds: 32, amplifier: 0, particles: true}
+        - {type: "jump_boost", duration-seconds: 26, amplifier: 2, particles: true}
+        - {type: "slow_falling", duration-seconds: 28, amplifier: 0, particles: true}
+      after:
+        - {type: "blindness", duration-seconds: 7, amplifier: 0, particles: true}
+        - {type: "slowness", duration-seconds: 18, amplifier: 0, particles: true}
+
+  spice:
+    enabled: true
+    consumable: true
+    category: "synthetic"
+    display-name: "<dark_red><bold>Spice</bold></dark_red>"
+    lore:
+      - "<gray>An enchanted pouch of dark fantasy herbs.</gray>"
+      - "<dark_gray>Unpredictable mixed effects</dark_gray>"
+    item:
+      fallback-material: "BROWN_DYE"
+      catitems-id: "catdrugs:spice"
+    consumption: {cooldown-seconds: 10, dose-points: 4}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "resistance", duration-seconds: 26, amplifier: 1, particles: true}
+        - {type: "speed", duration-seconds: 22, amplifier: 1, particles: true}
+        - {type: "nausea", duration-seconds: 30, amplifier: 0, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 38, amplifier: 2, particles: true}
+        - {type: "hunger", duration-seconds: 40, amplifier: 2, particles: true}
+
+  nitrous:
+    enabled: true
+    consumable: true
+    category: "inhalant"
+    display-name: "<white><bold>Nitrous Oxide</bold></white>"
+    lore:
+      - "<gray>A silver canister filled with floating End mist.</gray>"
+      - "<dark_gray>A very short, light floating effect</dark_gray>"
+    item:
+      fallback-material: "IRON_NUGGET"
+      catitems-id: "catdrugs:nitrous"
+    consumption: {cooldown-seconds: 7, dose-points: 3}
+    effects:
+      after-delay-ticks: 240
+      immediate:
+        - {type: "speed", duration-seconds: 14, amplifier: 1, particles: true}
+        - {type: "slow_falling", duration-seconds: 18, amplifier: 1, particles: true}
+        - {type: "absorption", duration-seconds: 16, amplifier: 0, particles: true}
+        - {type: "nausea", duration-seconds: 8, amplifier: 0, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 24, amplifier: 1, particles: true}
+        - {type: "slowness", duration-seconds: 18, amplifier: 0, particles: true}
+
+  mescaline:
+    enabled: true
+    consumable: true
+    category: "psychedelic"
+    display-name: "<gold><bold>Mescaline</bold></gold>"
+    lore: ["<gray>Amber cactus essence from desert alchemy.</gray>", "<dark_gray>Bright vision followed by fatigue</dark_gray>"]
+    item: {fallback-material: "HONEY_BOTTLE", catitems-id: "catdrugs:mescaline"}
+    consumption: {cooldown-seconds: 10, dose-points: 4}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "night_vision", duration-seconds: 40, amplifier: 0, particles: true}
+        - {type: "jump_boost", duration-seconds: 28, amplifier: 1, particles: true}
+        - {type: "nausea", duration-seconds: 20, amplifier: 0, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 32, amplifier: 1, particles: true}
+
+  ayahuasca:
+    enabled: true
+    consumable: true
+    category: "psychedelic"
+    display-name: "<dark_purple><bold>Ayahuasca</bold></dark_purple>"
+    lore: ["<gray>A ceremonial End-vine brew.</gray>", "<dark_gray>Long visions and slow movement</dark_gray>"]
+    item: {fallback-material: "POTION", catitems-id: "catdrugs:ayahuasca"}
+    consumption: {cooldown-seconds: 14, dose-points: 5}
+    effects:
+      after-delay-ticks: 620
+      immediate:
+        - {type: "night_vision", duration-seconds: 55, amplifier: 0, particles: true}
+        - {type: "slow_falling", duration-seconds: 38, amplifier: 0, particles: true}
+        - {type: "nausea", duration-seconds: 32, amplifier: 1, particles: true}
+      after:
+        - {type: "slowness", duration-seconds: 42, amplifier: 1, particles: true}
+
+  kratom:
+    enabled: true
+    consumable: true
+    category: "herbal"
+    display-name: "<red><bold>Kratom</bold></red>"
+    lore: ["<gray>A pouch of crimson fantasy leaves.</gray>", "<dark_gray>Steady focus with a heavy finish</dark_gray>"]
+    item: {fallback-material: "MANGROVE_LEAVES", catitems-id: "catdrugs:kratom"}
+    consumption: {cooldown-seconds: 9, dose-points: 3}
+    effects:
+      after-delay-ticks: 460
+      immediate:
+        - {type: "haste", duration-seconds: 32, amplifier: 1, particles: true}
+        - {type: "resistance", duration-seconds: 25, amplifier: 0, particles: true}
+      after:
+        - {type: "slowness", duration-seconds: 28, amplifier: 1, particles: true}
+
+  kava:
+    enabled: true
+    consumable: true
+    category: "herbal"
+    display-name: "<green><bold>Kava</bold></green>"
+    lore: ["<gray>Ground roots from a lush Minecraft grove.</gray>", "<dark_gray>Calm protection and reduced speed</dark_gray>"]
+    item: {fallback-material: "BOWL", catitems-id: "catdrugs:kava"}
+    consumption: {cooldown-seconds: 9, dose-points: 2}
+    effects:
+      after-delay-ticks: 420
+      immediate:
+        - {type: "resistance", duration-seconds: 34, amplifier: 0, particles: true}
+        - {type: "slowness", duration-seconds: 25, amplifier: 0, particles: true}
+      after:
+        - {type: "hunger", duration-seconds: 22, amplifier: 0, particles: true}
+
+  poppers:
+    enabled: true
+    consumable: true
+    category: "inhalant"
+    display-name: "<blue><bold>Poppers</bold></blue>"
+    lore: ["<gray>A blue bottle of volatile fantasy vapor.</gray>", "<dark_gray>Very brief speed and dizziness</dark_gray>"]
+    item: {fallback-material: "GLASS_BOTTLE", catitems-id: "catdrugs:poppers"}
+    consumption: {cooldown-seconds: 6, dose-points: 3}
+    effects:
+      after-delay-ticks: 180
+      immediate:
+        - {type: "speed", duration-seconds: 13, amplifier: 2, particles: true}
+        - {type: "nausea", duration-seconds: 9, amplifier: 0, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 18, amplifier: 1, particles: true}
+
+  ether:
+    enabled: true
+    consumable: true
+    category: "inhalant"
+    display-name: "<dark_gray><bold>Ether</bold></dark_gray>"
+    lore: ["<gray>A sealed bottle of shadowy alchemical mist.</gray>", "<dark_gray>Numbing, disorienting, and slow</dark_gray>"]
+    item: {fallback-material: "INK_SAC", catitems-id: "catdrugs:ether"}
+    consumption: {cooldown-seconds: 11, dose-points: 5}
+    effects:
+      after-delay-ticks: 400
+      immediate:
+        - {type: "resistance", duration-seconds: 28, amplifier: 1, particles: true}
+        - {type: "slowness", duration-seconds: 36, amplifier: 2, particles: true}
+        - {type: "blindness", duration-seconds: 8, amplifier: 0, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 38, amplifier: 2, particles: true}
+
+  lean:
+    enabled: true
+    consumable: true
+    category: "depressant"
+    display-name: "<light_purple><bold>Lean</bold></light_purple>"
+    lore: ["<gray>A purple fantasy syrup in an ornate cup.</gray>", "<dark_gray>Slow regeneration with a crash</dark_gray>"]
+    item: {fallback-material: "POTION", catitems-id: "catdrugs:lean"}
+    consumption: {cooldown-seconds: 11, dose-points: 4}
+    effects:
+      after-delay-ticks: 520
+      immediate:
+        - {type: "regeneration", duration-seconds: 16, amplifier: 0, particles: true}
+        - {type: "slowness", duration-seconds: 38, amplifier: 1, particles: true}
+        - {type: "nausea", duration-seconds: 18, amplifier: 0, particles: true}
+      after:
+        - {type: "hunger", duration-seconds: 35, amplifier: 2, particles: true}
+
+  morphine:
+    enabled: true
+    consumable: true
+    category: "opioid"
+    display-name: "<white><bold>Morphine</bold></white>"
+    lore: ["<gray>A pale ampoule from forbidden village medicine.</gray>", "<dark_gray>Strong protection with severe slowing</dark_gray>"]
+    item: {fallback-material: "GLASS_BOTTLE", catitems-id: "catdrugs:morphine"}
+    consumption: {cooldown-seconds: 13, dose-points: 6}
+    effects:
+      after-delay-ticks: 520
+      immediate:
+        - {type: "resistance", duration-seconds: 38, amplifier: 2, particles: true}
+        - {type: "regeneration", duration-seconds: 12, amplifier: 1, particles: true}
+        - {type: "slowness", duration-seconds: 42, amplifier: 2, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 48, amplifier: 2, particles: true}
+
+  codeine:
+    enabled: true
+    consumable: true
+    category: "opioid"
+    display-name: "<gray><bold>Codeine</bold></gray>"
+    lore: ["<gray>A jar of pale fantasy tablets.</gray>", "<dark_gray>Mild protection and drowsiness</dark_gray>"]
+    item: {fallback-material: "QUARTZ", catitems-id: "catdrugs:codeine"}
+    consumption: {cooldown-seconds: 10, dose-points: 4}
+    effects:
+      after-delay-ticks: 460
+      immediate:
+        - {type: "resistance", duration-seconds: 28, amplifier: 1, particles: true}
+        - {type: "slowness", duration-seconds: 30, amplifier: 1, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 30, amplifier: 1, particles: true}
+
+  diazepam:
+    enabled: true
+    consumable: true
+    category: "sedative"
+    display-name: "<gold><bold>Diazepam</bold></gold>"
+    lore: ["<gray>Orange tablets from a fictional clinic.</gray>", "<dark_gray>Calm resistance and sluggish movement</dark_gray>"]
+    item: {fallback-material: "ORANGE_DYE", catitems-id: "catdrugs:diazepam"}
+    consumption: {cooldown-seconds: 10, dose-points: 4}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "resistance", duration-seconds: 32, amplifier: 1, particles: true}
+        - {type: "slowness", duration-seconds: 34, amplifier: 1, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 34, amplifier: 1, particles: true}
+
+  alprazolam:
+    enabled: true
+    consumable: true
+    category: "sedative"
+    display-name: "<aqua><bold>Alprazolam</bold></aqua>"
+    lore: ["<gray>Turquoise fantasy tablets.</gray>", "<dark_gray>Short calm followed by weakness</dark_gray>"]
+    item: {fallback-material: "PRISMARINE_CRYSTALS", catitems-id: "catdrugs:alprazolam"}
+    consumption: {cooldown-seconds: 11, dose-points: 5}
+    effects:
+      after-delay-ticks: 440
+      immediate:
+        - {type: "resistance", duration-seconds: 30, amplifier: 1, particles: true}
+        - {type: "slowness", duration-seconds: 32, amplifier: 2, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 38, amplifier: 2, particles: true}
+
+  zolpidem:
+    enabled: true
+    consumable: true
+    category: "sedative"
+    display-name: "<light_purple><bold>Zolpidem</bold></light_purple>"
+    lore: ["<gray>Pink tablets dusted with phantom powder.</gray>", "<dark_gray>Night vision, drifting, then blindness</dark_gray>"]
+    item: {fallback-material: "PINK_DYE", catitems-id: "catdrugs:zolpidem"}
+    consumption: {cooldown-seconds: 10, dose-points: 4}
+    effects:
+      after-delay-ticks: 420
+      immediate:
+        - {type: "night_vision", duration-seconds: 34, amplifier: 0, particles: true}
+        - {type: "slow_falling", duration-seconds: 26, amplifier: 0, particles: true}
+        - {type: "slowness", duration-seconds: 30, amplifier: 1, particles: true}
+      after:
+        - {type: "blindness", duration-seconds: 8, amplifier: 0, particles: true}
+
+  two_cb:
+    enabled: true
+    consumable: true
+    category: "psychedelic"
+    display-name: "<rainbow><bold>2C-B</bold></rainbow>"
+    lore: ["<gray>A rainbow geometric fantasy tab.</gray>", "<dark_gray>Colorful speed and unstable vision</dark_gray>"]
+    item: {fallback-material: "MAGENTA_DYE", catitems-id: "catdrugs:two_cb"}
+    consumption: {cooldown-seconds: 10, dose-points: 4}
+    effects:
+      after-delay-ticks: 500
+      immediate:
+        - {type: "speed", duration-seconds: 28, amplifier: 1, particles: true}
+        - {type: "night_vision", duration-seconds: 40, amplifier: 0, particles: true}
+        - {type: "nausea", duration-seconds: 28, amplifier: 1, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 32, amplifier: 1, particles: true}
+
+  two_ci:
+    enabled: true
+    consumable: true
+    category: "psychedelic"
+    display-name: "<aqua><bold>2C-I</bold></aqua>"
+    lore: ["<gray>A cyan geometric fantasy tab.</gray>", "<dark_gray>Long lightness with visual distortion</dark_gray>"]
+    item: {fallback-material: "CYAN_DYE", catitems-id: "catdrugs:two_ci"}
+    consumption: {cooldown-seconds: 11, dose-points: 4}
+    effects:
+      after-delay-ticks: 540
+      immediate:
+        - {type: "jump_boost", duration-seconds: 34, amplifier: 2, particles: true}
+        - {type: "slow_falling", duration-seconds: 38, amplifier: 0, particles: true}
+        - {type: "nausea", duration-seconds: 26, amplifier: 0, particles: true}
+      after:
+        - {type: "slowness", duration-seconds: 34, amplifier: 1, particles: true}
+
+  cathinone:
+    enabled: true
+    consumable: true
+    category: "stimulant"
+    display-name: "<yellow><bold>Cathinone</bold></yellow>"
+    lore: ["<gray>Tan crystals from a fictional desert shrub.</gray>", "<dark_gray>Quick mining boost and hunger</dark_gray>"]
+    item: {fallback-material: "GLOWSTONE_DUST", catitems-id: "catdrugs:cathinone"}
+    consumption: {cooldown-seconds: 8, dose-points: 4}
+    effects:
+      after-delay-ticks: 420
+      immediate:
+        - {type: "speed", duration-seconds: 24, amplifier: 2, particles: true}
+        - {type: "haste", duration-seconds: 28, amplifier: 1, particles: true}
+      after:
+        - {type: "hunger", duration-seconds: 38, amplifier: 2, particles: true}
+
+  mephedrone:
+    enabled: true
+    consumable: true
+    category: "stimulant"
+    display-name: "<light_purple><bold>Mephedrone</bold></light_purple>"
+    lore: ["<gray>Magenta crystals from End alchemy.</gray>", "<dark_gray>Strong movement followed by exhaustion</dark_gray>"]
+    item: {fallback-material: "AMETHYST_SHARD", catitems-id: "catdrugs:mephedrone"}
+    consumption: {cooldown-seconds: 9, dose-points: 5}
+    effects:
+      after-delay-ticks: 500
+      immediate:
+        - {type: "speed", duration-seconds: 32, amplifier: 3, particles: true}
+        - {type: "haste", duration-seconds: 28, amplifier: 2, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 42, amplifier: 2, particles: true}
+        - {type: "hunger", duration-seconds: 42, amplifier: 3, particles: true}
+
+  methylphenidate:
+    enabled: true
+    consumable: true
+    category: "stimulant"
+    display-name: "<yellow><bold>Methylphenidate</bold></yellow>"
+    lore: ["<gray>A bottle of yellow focus tablets.</gray>", "<dark_gray>Precision haste with a short crash</dark_gray>"]
+    item: {fallback-material: "YELLOW_DYE", catitems-id: "catdrugs:methylphenidate"}
+    consumption: {cooldown-seconds: 8, dose-points: 3}
+    effects:
+      after-delay-ticks: 420
+      immediate:
+        - {type: "haste", duration-seconds: 34, amplifier: 2, particles: true}
+        - {type: "speed", duration-seconds: 26, amplifier: 1, particles: true}
+      after:
+        - {type: "slowness", duration-seconds: 24, amplifier: 1, particles: true}
+
+  clonazepam:
+    enabled: true
+    consumable: true
+    category: "sedative"
+    display-name: "<blue><bold>Clonazepam</bold></blue>"
+    lore: ["<gray>A jar of deep-blue fantasy tablets.</gray>", "<dark_gray>Heavy protection and slow recovery</dark_gray>"]
+    item: {fallback-material: "BLUE_DYE", catitems-id: "catdrugs:clonazepam"}
+    consumption: {cooldown-seconds: 12, dose-points: 5}
+    effects:
+      after-delay-ticks: 500
+      immediate:
+        - {type: "resistance", duration-seconds: 38, amplifier: 2, particles: true}
+        - {type: "slowness", duration-seconds: 42, amplifier: 2, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 42, amplifier: 2, particles: true}
+
+  barbiturates:
+    enabled: true
+    consumable: true
+    category: "sedative"
+    display-name: "<dark_red><bold>Barbiturates</bold></dark_red>"
+    lore: ["<gray>A dark-red bottle of vintage fantasy medicine.</gray>", "<dark_gray>Strong defense with severe weakness</dark_gray>"]
+    item: {fallback-material: "RED_DYE", catitems-id: "catdrugs:barbiturates"}
+    consumption: {cooldown-seconds: 13, dose-points: 6}
+    effects:
+      after-delay-ticks: 520
+      immediate:
+        - {type: "resistance", duration-seconds: 42, amplifier: 3, particles: true}
+        - {type: "slowness", duration-seconds: 46, amplifier: 3, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 52, amplifier: 3, particles: true}
+        - {type: "blindness", duration-seconds: 9, amplifier: 0, particles: true}
+
+  dxm:
+    enabled: true
+    consumable: true
+    category: "dissociative"
+    display-name: "<gold><bold>DXM</bold></gold>"
+    lore: ["<gray>An orange bottle of fictional cough mixture.</gray>", "<dark_gray>Floating vision with a dizzy finish</dark_gray>"]
+    item: {fallback-material: "HONEY_BOTTLE", catitems-id: "catdrugs:dxm"}
+    consumption: {cooldown-seconds: 10, dose-points: 4}
+    effects:
+      after-delay-ticks: 440
+      immediate:
+        - {type: "slow_falling", duration-seconds: 34, amplifier: 1, particles: true}
+        - {type: "night_vision", duration-seconds: 32, amplifier: 0, particles: true}
+        - {type: "nausea", duration-seconds: 24, amplifier: 1, particles: true}
+      after:
+        - {type: "slowness", duration-seconds: 32, amplifier: 1, particles: true}
+
+  # BEGIN GENERATED 0.5.0 EXPANSION
+
+  cannabis_oil:
+    enabled: true
+    consumable: true
+    category: "cannabis"
+    display-name: "<dark_green><bold>Cannabis Oil</bold></dark_green>"
+    lore:
+      - "<gray>A vial of emerald fantasy herb oil.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "HONEY_BOTTLE", catitems-id: "catdrugs:cannabis_oil"}
+    consumption: {cooldown-seconds: 9, dose-points: 3}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "slow_falling", duration-seconds: 34, amplifier: 0, particles: true}
+        - {type: "resistance", duration-seconds: 28, amplifier: 0, particles: true}
+        - {type: "slowness", duration-seconds: 22, amplifier: 0, particles: true}
+      after:
+        - {type: "hunger", duration-seconds: 28, amplifier: 1, particles: true}
+
+  edible:
+    enabled: true
+    consumable: true
+    category: "cannabis"
+    display-name: "<green><bold>Herbal Edible</bold></green>"
+    lore:
+      - "<gray>A glazed cookie infused with fantasy herbs.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "COOKIE", catitems-id: "catdrugs:edible"}
+    consumption: {cooldown-seconds: 9, dose-points: 3}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "slow_falling", duration-seconds: 34, amplifier: 0, particles: true}
+        - {type: "resistance", duration-seconds: 28, amplifier: 0, particles: true}
+        - {type: "slowness", duration-seconds: 22, amplifier: 0, particles: true}
+      after:
+        - {type: "hunger", duration-seconds: 28, amplifier: 1, particles: true}
+
+  shatter:
+    enabled: true
+    consumable: true
+    category: "cannabis"
+    display-name: "<gold><bold>Shatter</bold></gold>"
+    lore:
+      - "<gray>A brittle amber alchemical shard.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "HONEYCOMB", catitems-id: "catdrugs:shatter"}
+    consumption: {cooldown-seconds: 9, dose-points: 3}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "slow_falling", duration-seconds: 34, amplifier: 0, particles: true}
+        - {type: "resistance", duration-seconds: 28, amplifier: 0, particles: true}
+        - {type: "slowness", duration-seconds: 22, amplifier: 0, particles: true}
+      after:
+        - {type: "hunger", duration-seconds: 28, amplifier: 1, particles: true}
+
+  wax:
+    enabled: true
+    consumable: true
+    category: "cannabis"
+    display-name: "<yellow><bold>Herbal Wax</bold></yellow>"
+    lore:
+      - "<gray>A small tin of aromatic fantasy wax.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "HONEYCOMB", catitems-id: "catdrugs:wax"}
+    consumption: {cooldown-seconds: 9, dose-points: 3}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "slow_falling", duration-seconds: 34, amplifier: 0, particles: true}
+        - {type: "resistance", duration-seconds: 28, amplifier: 0, particles: true}
+        - {type: "slowness", duration-seconds: 22, amplifier: 0, particles: true}
+      after:
+        - {type: "hunger", duration-seconds: 28, amplifier: 1, particles: true}
+
+  peyote:
+    enabled: true
+    consumable: true
+    category: "psychedelic"
+    display-name: "<green><bold>Peyote</bold></green>"
+    lore:
+      - "<gray>A star-shaped desert cactus button.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "CACTUS", catitems-id: "catdrugs:peyote"}
+    consumption: {cooldown-seconds: 10, dose-points: 4}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "night_vision", duration-seconds: 38, amplifier: 0, particles: true}
+        - {type: "nausea", duration-seconds: 28, amplifier: 1, particles: true}
+        - {type: "slow_falling", duration-seconds: 25, amplifier: 0, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 30, amplifier: 1, particles: true}
+
+  ibogaine:
+    enabled: true
+    consumable: true
+    category: "psychedelic"
+    display-name: "<gold><bold>Ibogaine</bold></gold>"
+    lore:
+      - "<gray>A carved bottle of amber root extract.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "BROWN_DYE", catitems-id: "catdrugs:ibogaine"}
+    consumption: {cooldown-seconds: 10, dose-points: 4}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "night_vision", duration-seconds: 38, amplifier: 0, particles: true}
+        - {type: "nausea", duration-seconds: 28, amplifier: 1, particles: true}
+        - {type: "slow_falling", duration-seconds: 25, amplifier: 0, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 30, amplifier: 1, particles: true}
+
+  psilocybin:
+    enabled: true
+    consumable: true
+    category: "psychedelic"
+    display-name: "<light_purple><bold>Psilocybin</bold></light_purple>"
+    lore:
+      - "<gray>A glowing violet mushroom capsule.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "RED_MUSHROOM", catitems-id: "catdrugs:psilocybin"}
+    consumption: {cooldown-seconds: 10, dose-points: 4}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "night_vision", duration-seconds: 38, amplifier: 0, particles: true}
+        - {type: "nausea", duration-seconds: 28, amplifier: 1, particles: true}
+        - {type: "slow_falling", duration-seconds: 25, amplifier: 0, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 30, amplifier: 1, particles: true}
+
+  amanita:
+    enabled: true
+    consumable: true
+    category: "psychedelic"
+    display-name: "<red><bold>Amanita</bold></red>"
+    lore:
+      - "<gray>A bright spotted mushroom specimen.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "RED_MUSHROOM", catitems-id: "catdrugs:amanita"}
+    consumption: {cooldown-seconds: 10, dose-points: 4}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "night_vision", duration-seconds: 38, amplifier: 0, particles: true}
+        - {type: "nausea", duration-seconds: 28, amplifier: 1, particles: true}
+        - {type: "slow_falling", duration-seconds: 25, amplifier: 0, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 30, amplifier: 1, particles: true}
+
+  morning_glory:
+    enabled: true
+    consumable: true
+    category: "psychedelic"
+    display-name: "<blue><bold>Morning Glory</bold></blue>"
+    lore:
+      - "<gray>A pouch of enchanted blue flower seeds.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "BLUE_ORCHID", catitems-id: "catdrugs:morning_glory"}
+    consumption: {cooldown-seconds: 10, dose-points: 4}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "night_vision", duration-seconds: 38, amplifier: 0, particles: true}
+        - {type: "nausea", duration-seconds: 28, amplifier: 1, particles: true}
+        - {type: "slow_falling", duration-seconds: 25, amplifier: 0, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 30, amplifier: 1, particles: true}
+
+  fly_agaric:
+    enabled: true
+    consumable: true
+    category: "psychedelic"
+    display-name: "<dark_red><bold>Fly Agaric</bold></dark_red>"
+    lore:
+      - "<gray>A dried crimson woodland mushroom.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "BROWN_MUSHROOM", catitems-id: "catdrugs:fly_agaric"}
+    consumption: {cooldown-seconds: 10, dose-points: 4}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "night_vision", duration-seconds: 38, amplifier: 0, particles: true}
+        - {type: "nausea", duration-seconds: 28, amplifier: 1, particles: true}
+        - {type: "slow_falling", duration-seconds: 25, amplifier: 0, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 30, amplifier: 1, particles: true}
+
+  ecstasy:
+    enabled: true
+    consumable: true
+    category: "stimulant"
+    display-name: "<light_purple><bold>Ecstasy</bold></light_purple>"
+    lore:
+      - "<gray>A pressed neon fantasy tablet.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "MAGENTA_DYE", catitems-id: "catdrugs:ecstasy"}
+    consumption: {cooldown-seconds: 8, dose-points: 4}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "speed", duration-seconds: 32, amplifier: 2, particles: true}
+        - {type: "haste", duration-seconds: 30, amplifier: 1, particles: true}
+      after:
+        - {type: "hunger", duration-seconds: 38, amplifier: 2, particles: true}
+        - {type: "weakness", duration-seconds: 28, amplifier: 1, particles: true}
+
+  molly:
+    enabled: true
+    consumable: true
+    category: "stimulant"
+    display-name: "<aqua><bold>Molly</bold></aqua>"
+    lore:
+      - "<gray>A tiny pouch of shimmering crystals.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "PINK_DYE", catitems-id: "catdrugs:molly"}
+    consumption: {cooldown-seconds: 8, dose-points: 4}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "speed", duration-seconds: 32, amplifier: 2, particles: true}
+        - {type: "haste", duration-seconds: 30, amplifier: 1, particles: true}
+      after:
+        - {type: "hunger", duration-seconds: 38, amplifier: 2, particles: true}
+        - {type: "weakness", duration-seconds: 28, amplifier: 1, particles: true}
+
+  bath_salts:
+    enabled: true
+    consumable: true
+    category: "stimulant"
+    display-name: "<white><bold>Bath Salts</bold></white>"
+    lore:
+      - "<gray>A packet of iridescent alchemical salt.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "SUGAR", catitems-id: "catdrugs:bath_salts"}
+    consumption: {cooldown-seconds: 8, dose-points: 4}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "speed", duration-seconds: 32, amplifier: 2, particles: true}
+        - {type: "haste", duration-seconds: 30, amplifier: 1, particles: true}
+      after:
+        - {type: "hunger", duration-seconds: 38, amplifier: 2, particles: true}
+        - {type: "weakness", duration-seconds: 28, amplifier: 1, particles: true}
+
+  flakka:
+    enabled: true
+    consumable: true
+    category: "stimulant"
+    display-name: "<yellow><bold>Flakka</bold></yellow>"
+    lore:
+      - "<gray>Jagged pale-yellow fantasy crystals.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "QUARTZ", catitems-id: "catdrugs:flakka"}
+    consumption: {cooldown-seconds: 8, dose-points: 4}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "speed", duration-seconds: 32, amplifier: 2, particles: true}
+        - {type: "haste", duration-seconds: 30, amplifier: 1, particles: true}
+      after:
+        - {type: "hunger", duration-seconds: 38, amplifier: 2, particles: true}
+        - {type: "weakness", duration-seconds: 28, amplifier: 1, particles: true}
+
+  alpha_pvp:
+    enabled: true
+    consumable: true
+    category: "stimulant"
+    display-name: "<dark_aqua><bold>Alpha-PVP</bold></dark_aqua>"
+    lore:
+      - "<gray>A sealed vial of teal crystalline flakes.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "PRISMARINE_CRYSTALS", catitems-id: "catdrugs:alpha_pvp"}
+    consumption: {cooldown-seconds: 8, dose-points: 4}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "speed", duration-seconds: 32, amplifier: 2, particles: true}
+        - {type: "haste", duration-seconds: 30, amplifier: 1, particles: true}
+      after:
+        - {type: "hunger", duration-seconds: 38, amplifier: 2, particles: true}
+        - {type: "weakness", duration-seconds: 28, amplifier: 1, particles: true}
+
+  mdpv:
+    enabled: true
+    consumable: true
+    category: "stimulant"
+    display-name: "<gold><bold>MDPV</bold></gold>"
+    lore:
+      - "<gray>A dark bottle of glowing fantasy powder.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "GLOWSTONE_DUST", catitems-id: "catdrugs:mdpv"}
+    consumption: {cooldown-seconds: 8, dose-points: 4}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "speed", duration-seconds: 32, amplifier: 2, particles: true}
+        - {type: "haste", duration-seconds: 30, amplifier: 1, particles: true}
+      after:
+        - {type: "hunger", duration-seconds: 38, amplifier: 2, particles: true}
+        - {type: "weakness", duration-seconds: 28, amplifier: 1, particles: true}
+
+  bk_mdma:
+    enabled: true
+    consumable: true
+    category: "stimulant"
+    display-name: "<light_purple><bold>BK-MDMA</bold></light_purple>"
+    lore:
+      - "<gray>A purple alchemical capsule.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "PURPLE_DYE", catitems-id: "catdrugs:bk_mdma"}
+    consumption: {cooldown-seconds: 8, dose-points: 4}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "speed", duration-seconds: 32, amplifier: 2, particles: true}
+        - {type: "haste", duration-seconds: 30, amplifier: 1, particles: true}
+      after:
+        - {type: "hunger", duration-seconds: 38, amplifier: 2, particles: true}
+        - {type: "weakness", duration-seconds: 28, amplifier: 1, particles: true}
+
+  dexamphetamine:
+    enabled: true
+    consumable: true
+    category: "stimulant"
+    display-name: "<gold><bold>Dexamphetamine</bold></gold>"
+    lore:
+      - "<gray>A compact orange tablet bottle.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "ORANGE_DYE", catitems-id: "catdrugs:dexamphetamine"}
+    consumption: {cooldown-seconds: 8, dose-points: 4}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "speed", duration-seconds: 32, amplifier: 2, particles: true}
+        - {type: "haste", duration-seconds: 30, amplifier: 1, particles: true}
+      after:
+        - {type: "hunger", duration-seconds: 38, amplifier: 2, particles: true}
+        - {type: "weakness", duration-seconds: 28, amplifier: 1, particles: true}
+
+  lisdexamfetamine:
+    enabled: true
+    consumable: true
+    category: "stimulant"
+    display-name: "<aqua><bold>Lisdexamfetamine</bold></aqua>"
+    lore:
+      - "<gray>A cyan vial of focus capsules.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "CYAN_DYE", catitems-id: "catdrugs:lisdexamfetamine"}
+    consumption: {cooldown-seconds: 8, dose-points: 4}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "speed", duration-seconds: 32, amplifier: 2, particles: true}
+        - {type: "haste", duration-seconds: 30, amplifier: 1, particles: true}
+      after:
+        - {type: "hunger", duration-seconds: 38, amplifier: 2, particles: true}
+        - {type: "weakness", duration-seconds: 28, amplifier: 1, particles: true}
+
+  modafinil:
+    enabled: true
+    consumable: true
+    category: "stimulant"
+    display-name: "<blue><bold>Modafinil</bold></blue>"
+    lore:
+      - "<gray>A silver-blue wakefulness tablet.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "LIGHT_BLUE_DYE", catitems-id: "catdrugs:modafinil"}
+    consumption: {cooldown-seconds: 8, dose-points: 4}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "speed", duration-seconds: 32, amplifier: 2, particles: true}
+        - {type: "haste", duration-seconds: 30, amplifier: 1, particles: true}
+      after:
+        - {type: "hunger", duration-seconds: 38, amplifier: 2, particles: true}
+        - {type: "weakness", duration-seconds: 28, amplifier: 1, particles: true}
+
+  caffeine:
+    enabled: true
+    consumable: true
+    category: "stimulant"
+    display-name: "<gold><bold>Caffeine</bold></gold>"
+    lore:
+      - "<gray>A steaming dark-roast fantasy tonic.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "COCOA_BEANS", catitems-id: "catdrugs:caffeine"}
+    consumption: {cooldown-seconds: 8, dose-points: 4}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "speed", duration-seconds: 32, amplifier: 2, particles: true}
+        - {type: "haste", duration-seconds: 30, amplifier: 1, particles: true}
+      after:
+        - {type: "hunger", duration-seconds: 38, amplifier: 2, particles: true}
+        - {type: "weakness", duration-seconds: 28, amplifier: 1, particles: true}
+
+  nicotine:
+    enabled: true
+    consumable: true
+    category: "stimulant"
+    display-name: "<dark_green><bold>Nicotine</bold></dark_green>"
+    lore:
+      - "<gray>A small green leaf pouch.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "DRIED_KELP", catitems-id: "catdrugs:nicotine"}
+    consumption: {cooldown-seconds: 8, dose-points: 4}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "speed", duration-seconds: 32, amplifier: 2, particles: true}
+        - {type: "haste", duration-seconds: 30, amplifier: 1, particles: true}
+      after:
+        - {type: "hunger", duration-seconds: 38, amplifier: 2, particles: true}
+        - {type: "weakness", duration-seconds: 28, amplifier: 1, particles: true}
+
+  alcohol:
+    enabled: true
+    consumable: true
+    category: "sedative"
+    display-name: "<gold><bold>Alcohol</bold></gold>"
+    lore:
+      - "<gray>A plain bottle of strong village brew.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "POTION", catitems-id: "catdrugs:alcohol"}
+    consumption: {cooldown-seconds: 12, dose-points: 5}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "resistance", duration-seconds: 38, amplifier: 1, particles: true}
+        - {type: "slowness", duration-seconds: 40, amplifier: 2, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 42, amplifier: 2, particles: true}
+        - {type: "mining_fatigue", duration-seconds: 30, amplifier: 1, particles: true}
+
+  absinthe:
+    enabled: true
+    consumable: true
+    category: "sedative"
+    display-name: "<green><bold>Absinthe</bold></green>"
+    lore:
+      - "<gray>An ornate bottle of emerald spirit.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "LIME_DYE", catitems-id: "catdrugs:absinthe"}
+    consumption: {cooldown-seconds: 12, dose-points: 5}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "resistance", duration-seconds: 38, amplifier: 1, particles: true}
+        - {type: "slowness", duration-seconds: 40, amplifier: 2, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 42, amplifier: 2, particles: true}
+        - {type: "mining_fatigue", duration-seconds: 30, amplifier: 1, particles: true}
+
+  moonshine:
+    enabled: true
+    consumable: true
+    category: "sedative"
+    display-name: "<white><bold>Moonshine</bold></white>"
+    lore:
+      - "<gray>A corked jar of clear cave brew.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "GLASS_BOTTLE", catitems-id: "catdrugs:moonshine"}
+    consumption: {cooldown-seconds: 12, dose-points: 5}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "resistance", duration-seconds: 38, amplifier: 1, particles: true}
+        - {type: "slowness", duration-seconds: 40, amplifier: 2, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 42, amplifier: 2, particles: true}
+        - {type: "mining_fatigue", duration-seconds: 30, amplifier: 1, particles: true}
+
+  chloroform:
+    enabled: true
+    consumable: true
+    category: "inhalant"
+    display-name: "<aqua><bold>Chloroform</bold></aqua>"
+    lore:
+      - "<gray>A dark glass bottle with a pale label.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "GLASS_BOTTLE", catitems-id: "catdrugs:chloroform"}
+    consumption: {cooldown-seconds: 11, dose-points: 5}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "slow_falling", duration-seconds: 20, amplifier: 1, particles: true}
+        - {type: "nausea", duration-seconds: 28, amplifier: 2, particles: true}
+      after:
+        - {type: "blindness", duration-seconds: 8, amplifier: 0, particles: true}
+        - {type: "weakness", duration-seconds: 34, amplifier: 2, particles: true}
+
+  butane:
+    enabled: true
+    consumable: true
+    category: "inhalant"
+    display-name: "<red><bold>Butane</bold></red>"
+    lore:
+      - "<gray>A red fantasy pressure canister.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "FIRE_CHARGE", catitems-id: "catdrugs:butane"}
+    consumption: {cooldown-seconds: 11, dose-points: 5}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "slow_falling", duration-seconds: 20, amplifier: 1, particles: true}
+        - {type: "nausea", duration-seconds: 28, amplifier: 2, particles: true}
+      after:
+        - {type: "blindness", duration-seconds: 8, amplifier: 0, particles: true}
+        - {type: "weakness", duration-seconds: 34, amplifier: 2, particles: true}
+
+  glue:
+    enabled: true
+    consumable: true
+    category: "inhalant"
+    display-name: "<yellow><bold>Glue</bold></yellow>"
+    lore:
+      - "<gray>A dented tube of enchanted adhesive.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "SLIME_BALL", catitems-id: "catdrugs:glue"}
+    consumption: {cooldown-seconds: 11, dose-points: 5}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "slow_falling", duration-seconds: 20, amplifier: 1, particles: true}
+        - {type: "nausea", duration-seconds: 28, amplifier: 2, particles: true}
+      after:
+        - {type: "blindness", duration-seconds: 8, amplifier: 0, particles: true}
+        - {type: "weakness", duration-seconds: 34, amplifier: 2, particles: true}
+
+  aerosol:
+    enabled: true
+    consumable: true
+    category: "inhalant"
+    display-name: "<gray><bold>Aerosol</bold></gray>"
+    lore:
+      - "<gray>A bright spray can with warning stripes.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "IRON_NUGGET", catitems-id: "catdrugs:aerosol"}
+    consumption: {cooldown-seconds: 11, dose-points: 5}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "slow_falling", duration-seconds: 20, amplifier: 1, particles: true}
+        - {type: "nausea", duration-seconds: 28, amplifier: 2, particles: true}
+      after:
+        - {type: "blindness", duration-seconds: 8, amplifier: 0, particles: true}
+        - {type: "weakness", duration-seconds: 34, amplifier: 2, particles: true}
+
+  amyl_nitrite:
+    enabled: true
+    consumable: true
+    category: "inhalant"
+    display-name: "<light_purple><bold>Amyl Nitrite</bold></light_purple>"
+    lore:
+      - "<gray>A tiny purple glass ampoule.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "PINK_DYE", catitems-id: "catdrugs:amyl_nitrite"}
+    consumption: {cooldown-seconds: 11, dose-points: 5}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "slow_falling", duration-seconds: 20, amplifier: 1, particles: true}
+        - {type: "nausea", duration-seconds: 28, amplifier: 2, particles: true}
+      after:
+        - {type: "blindness", duration-seconds: 8, amplifier: 0, particles: true}
+        - {type: "weakness", duration-seconds: 34, amplifier: 2, particles: true}
+
+  hydrocodone:
+    enabled: true
+    consumable: true
+    category: "opioid"
+    display-name: "<white><bold>Hydrocodone</bold></white>"
+    lore:
+      - "<gray>A white fantasy medicine bottle.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "WHITE_DYE", catitems-id: "catdrugs:hydrocodone"}
+    consumption: {cooldown-seconds: 13, dose-points: 6}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "resistance", duration-seconds: 42, amplifier: 2, particles: true}
+        - {type: "absorption", duration-seconds: 32, amplifier: 1, particles: true}
+        - {type: "slowness", duration-seconds: 40, amplifier: 2, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 48, amplifier: 2, particles: true}
+        - {type: "hunger", duration-seconds: 38, amplifier: 2, particles: true}
+
+  hydromorphone:
+    enabled: true
+    consumable: true
+    category: "opioid"
+    display-name: "<aqua><bold>Hydromorphone</bold></aqua>"
+    lore:
+      - "<gray>A blue vial with a silver stopper.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "LIGHT_BLUE_DYE", catitems-id: "catdrugs:hydromorphone"}
+    consumption: {cooldown-seconds: 13, dose-points: 6}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "resistance", duration-seconds: 42, amplifier: 2, particles: true}
+        - {type: "absorption", duration-seconds: 32, amplifier: 1, particles: true}
+        - {type: "slowness", duration-seconds: 40, amplifier: 2, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 48, amplifier: 2, particles: true}
+        - {type: "hunger", duration-seconds: 38, amplifier: 2, particles: true}
+
+  methadone:
+    enabled: true
+    consumable: true
+    category: "opioid"
+    display-name: "<gold><bold>Methadone</bold></gold>"
+    lore:
+      - "<gray>An amber bottle of fantasy syrup.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "ORANGE_DYE", catitems-id: "catdrugs:methadone"}
+    consumption: {cooldown-seconds: 13, dose-points: 6}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "resistance", duration-seconds: 42, amplifier: 2, particles: true}
+        - {type: "absorption", duration-seconds: 32, amplifier: 1, particles: true}
+        - {type: "slowness", duration-seconds: 40, amplifier: 2, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 48, amplifier: 2, particles: true}
+        - {type: "hunger", duration-seconds: 38, amplifier: 2, particles: true}
+
+  buprenorphine:
+    enabled: true
+    consumable: true
+    category: "opioid"
+    display-name: "<dark_aqua><bold>Buprenorphine</bold></dark_aqua>"
+    lore:
+      - "<gray>A teal tablet blister pack.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "CYAN_DYE", catitems-id: "catdrugs:buprenorphine"}
+    consumption: {cooldown-seconds: 13, dose-points: 6}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "resistance", duration-seconds: 42, amplifier: 2, particles: true}
+        - {type: "absorption", duration-seconds: 32, amplifier: 1, particles: true}
+        - {type: "slowness", duration-seconds: 40, amplifier: 2, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 48, amplifier: 2, particles: true}
+        - {type: "hunger", duration-seconds: 38, amplifier: 2, particles: true}
+
+  tramadol:
+    enabled: true
+    consumable: true
+    category: "opioid"
+    display-name: "<green><bold>Tramadol</bold></green>"
+    lore:
+      - "<gray>A green jar of round fantasy tablets.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "GREEN_DYE", catitems-id: "catdrugs:tramadol"}
+    consumption: {cooldown-seconds: 13, dose-points: 6}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "resistance", duration-seconds: 42, amplifier: 2, particles: true}
+        - {type: "absorption", duration-seconds: 32, amplifier: 1, particles: true}
+        - {type: "slowness", duration-seconds: 40, amplifier: 2, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 48, amplifier: 2, particles: true}
+        - {type: "hunger", duration-seconds: 38, amplifier: 2, particles: true}
+
+  tapentadol:
+    enabled: true
+    consumable: true
+    category: "opioid"
+    display-name: "<light_purple><bold>Tapentadol</bold></light_purple>"
+    lore:
+      - "<gray>A magenta capsule bottle.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "MAGENTA_DYE", catitems-id: "catdrugs:tapentadol"}
+    consumption: {cooldown-seconds: 13, dose-points: 6}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "resistance", duration-seconds: 42, amplifier: 2, particles: true}
+        - {type: "absorption", duration-seconds: 32, amplifier: 1, particles: true}
+        - {type: "slowness", duration-seconds: 40, amplifier: 2, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 48, amplifier: 2, particles: true}
+        - {type: "hunger", duration-seconds: 38, amplifier: 2, particles: true}
+
+  carfentanil:
+    enabled: true
+    consumable: true
+    category: "opioid"
+    display-name: "<dark_red><bold>Carfentanil</bold></dark_red>"
+    lore:
+      - "<gray>A black hazard vial with a red seal.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "BLACK_DYE", catitems-id: "catdrugs:carfentanil"}
+    consumption: {cooldown-seconds: 13, dose-points: 6}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "resistance", duration-seconds: 42, amplifier: 2, particles: true}
+        - {type: "absorption", duration-seconds: 32, amplifier: 1, particles: true}
+        - {type: "slowness", duration-seconds: 40, amplifier: 2, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 48, amplifier: 2, particles: true}
+        - {type: "hunger", duration-seconds: 38, amplifier: 2, particles: true}
+
+  sufentanil:
+    enabled: true
+    consumable: true
+    category: "opioid"
+    display-name: "<gray><bold>Sufentanil</bold></gray>"
+    lore:
+      - "<gray>A charcoal vial with a bright stopper.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "GRAY_DYE", catitems-id: "catdrugs:sufentanil"}
+    consumption: {cooldown-seconds: 13, dose-points: 6}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "resistance", duration-seconds: 42, amplifier: 2, particles: true}
+        - {type: "absorption", duration-seconds: 32, amplifier: 1, particles: true}
+        - {type: "slowness", duration-seconds: 40, amplifier: 2, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 48, amplifier: 2, particles: true}
+        - {type: "hunger", duration-seconds: 38, amplifier: 2, particles: true}
+
+  lorazepam:
+    enabled: true
+    consumable: true
+    category: "sedative"
+    display-name: "<white><bold>Lorazepam</bold></white>"
+    lore:
+      - "<gray>A pale bottle of calm tablets.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "LIGHT_GRAY_DYE", catitems-id: "catdrugs:lorazepam"}
+    consumption: {cooldown-seconds: 12, dose-points: 5}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "resistance", duration-seconds: 38, amplifier: 1, particles: true}
+        - {type: "slowness", duration-seconds: 40, amplifier: 2, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 42, amplifier: 2, particles: true}
+        - {type: "mining_fatigue", duration-seconds: 30, amplifier: 1, particles: true}
+
+  temazepam:
+    enabled: true
+    consumable: true
+    category: "sedative"
+    display-name: "<yellow><bold>Temazepam</bold></yellow>"
+    lore:
+      - "<gray>A golden jar marked with a moon.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "YELLOW_DYE", catitems-id: "catdrugs:temazepam"}
+    consumption: {cooldown-seconds: 12, dose-points: 5}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "resistance", duration-seconds: 38, amplifier: 1, particles: true}
+        - {type: "slowness", duration-seconds: 40, amplifier: 2, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 42, amplifier: 2, particles: true}
+        - {type: "mining_fatigue", duration-seconds: 30, amplifier: 1, particles: true}
+
+  midazolam:
+    enabled: true
+    consumable: true
+    category: "sedative"
+    display-name: "<blue><bold>Midazolam</bold></blue>"
+    lore:
+      - "<gray>A dark-blue fantasy ampoule.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "BLUE_DYE", catitems-id: "catdrugs:midazolam"}
+    consumption: {cooldown-seconds: 12, dose-points: 5}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "resistance", duration-seconds: 38, amplifier: 1, particles: true}
+        - {type: "slowness", duration-seconds: 40, amplifier: 2, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 42, amplifier: 2, particles: true}
+        - {type: "mining_fatigue", duration-seconds: 30, amplifier: 1, particles: true}
+
+  phenobarbital:
+    enabled: true
+    consumable: true
+    category: "sedative"
+    display-name: "<dark_red><bold>Phenobarbital</bold></dark_red>"
+    lore:
+      - "<gray>A vintage red apothecary bottle.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "RED_DYE", catitems-id: "catdrugs:phenobarbital"}
+    consumption: {cooldown-seconds: 12, dose-points: 5}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "resistance", duration-seconds: 38, amplifier: 1, particles: true}
+        - {type: "slowness", duration-seconds: 40, amplifier: 2, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 42, amplifier: 2, particles: true}
+        - {type: "mining_fatigue", duration-seconds: 30, amplifier: 1, particles: true}
+
+  quaaludes:
+    enabled: true
+    consumable: true
+    category: "sedative"
+    display-name: "<light_purple><bold>Quaaludes</bold></light_purple>"
+    lore:
+      - "<gray>A retro jar of speckled tablets.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "PINK_DYE", catitems-id: "catdrugs:quaaludes"}
+    consumption: {cooldown-seconds: 12, dose-points: 5}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "resistance", duration-seconds: 38, amplifier: 1, particles: true}
+        - {type: "slowness", duration-seconds: 40, amplifier: 2, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 42, amplifier: 2, particles: true}
+        - {type: "mining_fatigue", duration-seconds: 30, amplifier: 1, particles: true}
+
+  pregabalin:
+    enabled: true
+    consumable: true
+    category: "sedative"
+    display-name: "<light_purple><bold>Pregabalin</bold></light_purple>"
+    lore:
+      - "<gray>A violet bottle of fantasy capsules.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "PURPLE_DYE", catitems-id: "catdrugs:pregabalin"}
+    consumption: {cooldown-seconds: 12, dose-points: 5}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "resistance", duration-seconds: 38, amplifier: 1, particles: true}
+        - {type: "slowness", duration-seconds: 40, amplifier: 2, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 42, amplifier: 2, particles: true}
+        - {type: "mining_fatigue", duration-seconds: 30, amplifier: 1, particles: true}
+
+  gabapentin:
+    enabled: true
+    consumable: true
+    category: "sedative"
+    display-name: "<aqua><bold>Gabapentin</bold></aqua>"
+    lore:
+      - "<gray>A turquoise medicine pouch.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "CYAN_DYE", catitems-id: "catdrugs:gabapentin"}
+    consumption: {cooldown-seconds: 12, dose-points: 5}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "resistance", duration-seconds: 38, amplifier: 1, particles: true}
+        - {type: "slowness", duration-seconds: 40, amplifier: 2, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 42, amplifier: 2, particles: true}
+        - {type: "mining_fatigue", duration-seconds: 30, amplifier: 1, particles: true}
+
+  desomorphine:
+    enabled: true
+    consumable: true
+    category: "opioid"
+    display-name: "<dark_red><bold>Desomorphine</bold></dark_red>"
+    lore:
+      - "<gray>A weathered brown hazard bottle.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "BROWN_DYE", catitems-id: "catdrugs:desomorphine"}
+    consumption: {cooldown-seconds: 13, dose-points: 6}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "resistance", duration-seconds: 42, amplifier: 2, particles: true}
+        - {type: "absorption", duration-seconds: 32, amplifier: 1, particles: true}
+        - {type: "slowness", duration-seconds: 40, amplifier: 2, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 48, amplifier: 2, particles: true}
+        - {type: "hunger", duration-seconds: 38, amplifier: 2, particles: true}
+
+  etizolam:
+    enabled: true
+    consumable: true
+    category: "sedative"
+    display-name: "<blue><bold>Etizolam</bold></blue>"
+    lore:
+      - "<gray>A cobalt blister strip.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "BLUE_DYE", catitems-id: "catdrugs:etizolam"}
+    consumption: {cooldown-seconds: 12, dose-points: 5}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "resistance", duration-seconds: 38, amplifier: 1, particles: true}
+        - {type: "slowness", duration-seconds: 40, amplifier: 2, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 42, amplifier: 2, particles: true}
+        - {type: "mining_fatigue", duration-seconds: 30, amplifier: 1, particles: true}
+
+  phenibut:
+    enabled: true
+    consumable: true
+    category: "sedative"
+    display-name: "<white><bold>Phenibut</bold></white>"
+    lore:
+      - "<gray>A white jar of crystalline fantasy powder.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "QUARTZ", catitems-id: "catdrugs:phenibut"}
+    consumption: {cooldown-seconds: 12, dose-points: 5}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "resistance", duration-seconds: 38, amplifier: 1, particles: true}
+        - {type: "slowness", duration-seconds: 40, amplifier: 2, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 42, amplifier: 2, particles: true}
+        - {type: "mining_fatigue", duration-seconds: 30, amplifier: 1, particles: true}
+
+  coca_leaf:
+    enabled: true
+    consumable: true
+    category: "stimulant"
+    display-name: "<green><bold>Coca Leaf</bold></green>"
+    lore:
+      - "<gray>A tied bundle of glossy green leaves.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "AZALEA_LEAVES", catitems-id: "catdrugs:coca_leaf"}
+    consumption: {cooldown-seconds: 8, dose-points: 4}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "speed", duration-seconds: 32, amplifier: 2, particles: true}
+        - {type: "haste", duration-seconds: 30, amplifier: 1, particles: true}
+      after:
+        - {type: "hunger", duration-seconds: 38, amplifier: 2, particles: true}
+        - {type: "weakness", duration-seconds: 28, amplifier: 1, particles: true}
+
+  opium:
+    enabled: true
+    consumable: true
+    category: "opioid"
+    display-name: "<dark_purple><bold>Opium</bold></dark_purple>"
+    lore:
+      - "<gray>A dark resin ball in a tiny bronze case.</gray>"
+      - "<dark_gray>Fictional Minecraft gameplay item</dark_gray>"
+    item: {fallback-material: "BLACK_DYE", catitems-id: "catdrugs:opium"}
+    consumption: {cooldown-seconds: 13, dose-points: 6}
+    effects:
+      after-delay-ticks: 480
+      immediate:
+        - {type: "resistance", duration-seconds: 42, amplifier: 2, particles: true}
+        - {type: "absorption", duration-seconds: 32, amplifier: 1, particles: true}
+        - {type: "slowness", duration-seconds: 40, amplifier: 2, particles: true}
+      after:
+        - {type: "weakness", duration-seconds: 48, amplifier: 2, particles: true}
+        - {type: "hunger", duration-seconds: 38, amplifier: 2, particles: true}
+
+  # END GENERATED 0.5.0 EXPANSION
+
+  joint:
+    enabled: true
+    consumable: true
+    category: "cannabis"
+    display-name: "<green><bold>Joint</bold></green>"
+    lore:
+      - "<gray>A prepared roll of fictional fantasy herbs.</gray>"
+      - "<dark_gray>Requires a Lighter in your off-hand</dark_gray>"
+    item: {fallback-material: "BLAZE_ROD", catitems-id: "catdrugs:joint"}
+    consumption: {cooldown-seconds: 8, dose-points: 2}
+    effects:
+      after-delay-ticks: 500
+      immediate:
+        - {type: "slow_falling", duration-seconds: 35, amplifier: 0, particles: true}
+        - {type: "resistance", duration-seconds: 25, amplifier: 0, particles: true}
+        - {type: "slowness", duration-seconds: 20, amplifier: 0, particles: true}
+      after:
+        - {type: "hunger", duration-seconds: 25, amplifier: 1, particles: true}
+
+  rolling_paper:
+    enabled: true
+    consumable: false
+    category: "utensil"
+    display-name: "<white>Rolling Paper</white>"
+    lore: ["<gray>Used to prepare raw Weed into a Joint.</gray>", "<dark_gray>Consumed by the crafting recipe</dark_gray>"]
+    item: {fallback-material: "PAPER", catitems-id: "catdrugs:rolling_paper"}
+    consumption: {cooldown-seconds: 0, dose-points: 0}
+    effects: {after-delay-ticks: 0, immediate: [], after: []}
+
+  lighter:
+    enabled: true
+    consumable: false
+    category: "utensil"
+    display-name: "<gold>Lighter</gold>"
+    lore: ["<gray>Reusable ignition tool for prepared Joints.</gray>", "<dark_gray>Hold in your off-hand</dark_gray>"]
+    item: {fallback-material: "FLINT_AND_STEEL", catitems-id: "catdrugs:lighter"}
+    consumption: {cooldown-seconds: 0, dose-points: 0}
+    effects: {after-delay-ticks: 0, immediate: [], after: []}
+
+  herbal_pipe:
+    enabled: true
+    consumable: false
+    category: "utensil"
+    display-name: "<gold>Herbal Pipe</gold>"
+    lore: ["<gray>Reusable utensil for cannabis items.</gray>", "<dark_gray>Hold in your off-hand</dark_gray>"]
+    item: {fallback-material: "BRICK", catitems-id: "catdrugs:herbal_pipe"}
+    consumption: {cooldown-seconds: 0, dose-points: 0}
+    effects: {after-delay-ticks: 0, immediate: [], after: []}
+
+  filter_straw:
+    enabled: true
+    consumable: false
+    category: "utensil"
+    display-name: "<aqua>Filter Straw</aqua>"
+    lore: ["<gray>Reusable fictional stimulant utensil.</gray>", "<dark_gray>Hold in your off-hand</dark_gray>"]
+    item: {fallback-material: "BAMBOO", catitems-id: "catdrugs:filter_straw"}
+    consumption: {cooldown-seconds: 0, dose-points: 0}
+    effects: {after-delay-ticks: 0, immediate: [], after: []}
+
+  medicine_cup:
+    enabled: true
+    consumable: false
+    category: "utensil"
+    display-name: "<white>Medicine Cup</white>"
+    lore: ["<gray>Reusable measured-dose cup.</gray>", "<dark_gray>Hold in your off-hand</dark_gray>"]
+    item: {fallback-material: "GLASS_BOTTLE", catitems-id: "catdrugs:medicine_cup"}
+    consumption: {cooldown-seconds: 0, dose-points: 0}
+    effects: {after-delay-ticks: 0, immediate: [], after: []}
+
+  ritual_bowl:
+    enabled: true
+    consumable: false
+    category: "utensil"
+    display-name: "<light_purple>Ritual Bowl</light_purple>"
+    lore: ["<gray>Reusable bowl for fantasy herbs and mushrooms.</gray>", "<dark_gray>Hold in your off-hand</dark_gray>"]
+    item: {fallback-material: "BOWL", catitems-id: "catdrugs:ritual_bowl"}
+    consumption: {cooldown-seconds: 0, dose-points: 0}
+    effects: {after-delay-ticks: 0, immediate: [], after: []}
+
+  sterile_applicator:
+    enabled: true
+    consumable: false
+    category: "utensil"
+    display-name: "<aqua>Sterile Applicator</aqua>"
+    lore: ["<gray>Reusable fictional opioid utensil.</gray>", "<dark_gray>Hold in your off-hand</dark_gray>"]
+    item: {fallback-material: "IRON_NUGGET", catitems-id: "catdrugs:sterile_applicator"}
+    consumption: {cooldown-seconds: 0, dose-points: 0}
+    effects: {after-delay-ticks: 0, immediate: [], after: []}
+
+  vaporizer:
+    enabled: true
+    consumable: false
+    category: "utensil"
+    display-name: "<dark_aqua>Vaporizer</dark_aqua>"
+    lore: ["<gray>Reusable powered utensil for inhalant items.</gray>", "<dark_gray>Hold in your off-hand</dark_gray>"]
+    item: {fallback-material: "COPPER_INGOT", catitems-id: "catdrugs:vaporizer"}
+    consumption: {cooldown-seconds: 0, dose-points: 0}
+    effects: {after-delay-ticks: 0, immediate: [], after: []}
+
+  hemp_seed:
+    enabled: true
+    consumable: false
+    category: "ingredient"
+    display-name: "<green>Hemp Seed Pouch</green>"
+    lore:
+      - "<gray>Fantasy seeds found in village chests.</gray>"
+      - "<dark_gray>Ingredient and collectible</dark_gray>"
+    item:
+      fallback-material: "WHEAT_SEEDS"
+      catitems-id: "catdrugs:hemp_seed"
+    consumption: {cooldown-seconds: 0, dose-points: 0}
+    effects: {after-delay-ticks: 0, immediate: [], after: []}
+
+  dried_herb:
+    enabled: true
+    consumable: false
+    category: "ingredient"
+    display-name: "<dark_green>Dried Herbs</dark_green>"
+    lore:
+      - "<gray>A bundle of fictional alchemical herbs.</gray>"
+      - "<dark_gray>Base for several Minecraft recipes</dark_gray>"
+    item:
+      fallback-material: "DEAD_BUSH"
+      catitems-id: "catdrugs:dried_herb"
+    consumption: {cooldown-seconds: 0, dose-points: 0}
+    effects: {after-delay-ticks: 0, immediate: [], after: []}
+
+  antidote:
+    enabled: true
+    consumable: false
+    category: "medical"
+    display-name: "<aqua><bold>Antidote</bold></aqua>"
+    lore:
+      - "<gray>Sneak and right-click another player to stabilize them.</gray>"
+      - "<dark_gray>Fictional emergency gameplay item</dark_gray>"
+    item: {fallback-material: "HONEY_BOTTLE", catitems-id: "catdrugs:antidote"}
+    consumption: {cooldown-seconds: 0, dose-points: 0}
+    effects: {after-delay-ticks: 0, immediate: [], after: []}
+
+  alchemy_cauldron:
+    enabled: true
+    consumable: false
+    category: "utensil"
+    display-name: "<dark_aqua><bold>Portable Alchemy Cauldron</bold></dark_aqua>"
+    lore:
+      - "<gray>Hold in your off-hand to run fictional lab processes.</gray>"
+      - "<dark_gray>Reusable and cannot be placed</dark_gray>"
+    item: {fallback-material: "CAULDRON", catitems-id: "catdrugs:alchemy_cauldron"}
+    consumption: {cooldown-seconds: 0, dose-points: 0}
+    effects: {after-delay-ticks: 0, immediate: [], after: []}
+
+  dealer_token:
+    enabled: true
+    consumable: false
+    category: "currency"
+    display-name: "<gold><bold>Dealer Token</bold></gold>"
+    lore:
+      - "<gray>A reputation reward from Village Pharmacist quests.</gray>"
+      - "<dark_gray>Collectible quest currency</dark_gray>"
+    item: {fallback-material: "SUNFLOWER", catitems-id: "catdrugs:dealer_token"}
+    consumption: {cooldown-seconds: 0, dose-points: 0}
+    effects: {after-delay-ticks: 0, immediate: [], after: []}
+
+  empty_pouch:
+    enabled: true
+    consumable: false
+    category: "ingredient"
+    display-name: "<gray>Empty Supply Pouch</gray>"
+    lore:
+      - "<gray>A reusable-looking fantasy crafting component.</gray>"
+      - "<dark_gray>Found in random supply caches</dark_gray>"
+    item: {fallback-material: "RABBIT_HIDE", catitems-id: "catdrugs:empty_pouch"}
+    consumption: {cooldown-seconds: 0, dose-points: 0}
+    effects: {after-delay-ticks: 0, immediate: [], after: []}

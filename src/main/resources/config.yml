@@ -1,0 +1,63 @@
+# ============================================================
+# CatDrugs - main configuration
+# ============================================================
+# Purpose:
+#   Global features, consumption rules, and safety limits.
+#
+# Notes:
+#   - /catdrugs reload safely reloads this file.
+#   - Substances and effects are configured separately in drugs.yml.
+#   - All recipes are fictional Minecraft recipes and do not represent
+#     real production methods.
+# ============================================================
+
+config-version: 1
+
+general:
+  enabled: true
+  language: "en"
+  debug: false
+
+features:
+  consumption:
+    enabled: true
+  overdose:
+    enabled: true
+
+overdose:
+  # Dose points are added within this time window.
+  window-seconds: 300
+  # Configured negative gameplay effects apply at this value.
+  threshold-points: 10
+  # Direct Minecraft damage; 6.0 equals three hearts.
+  damage: 6.0
+
+dose-reactions:
+  enabled: true
+  # Reactions trigger once when the accumulated points cross a threshold.
+  nausea-threshold-points: 6
+  vomiting-threshold-points: 10
+  blackout-threshold-points: 16
+  blackout-duration-seconds: 7
+  # Hard-limited by the plugin to a maximum of 150 blocks.
+  blackout-radius-blocks: 150
+  safe-location-attempts: 24
+
+logging:
+  level: "INFO"
+  log-consumption: false
+  log-dealer-conversion: true
+
+catitems:
+  addon:
+    # Installs item definitions, textures, and the pharmacist texture into an
+    # existing CatItems plugin. CatDrugs also works without CatItems.
+    auto-install: true
+    # After changes, CatDrugs reloads CatItems and rebuilds its pack.
+    rebuild-after-install: true
+    # false protects definitions and assets customized by an administrator.
+    overwrite-customized-files: false
+
+advanced:
+  # Strict validation prevents startup with damaged definitions.
+  strict-config-validation: true
